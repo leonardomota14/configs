@@ -1,0 +1,46 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.tabSize": 2,
+    "editor.fontSize": 14,
+    "explorer.openEditors.visible": 9,
+    "editor.cursorStyle": "line",
+    "editor.renderLineHighlight": "line",
+    "editor.wordWrap": true,
+    "vsicons.projectDetection.autoReload": true,
+    "files.insertFinalNewline": true,
+    "workbench.activityBar.visible": false,
+    "window.zoomLevel": 0,
+    "editor.formatOnType": true,
+    "editor.wrappingColumn": 0,
+    "typescript.useCodeSnippetsOnMethodSuggest": true,
+    "search.exclude": {
+        "**/.git": true,
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/tmp": true,
+        "**/.tmp": true,
+        "**/public": true,
+        "**/dist": true,
+        "**/t_libs": true,
+        "**/t": true,
+        "**/templates": true
+    },
+    "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/bower_components": true,
+        "**/tmp/": true,
+        "**/.tmp/": true,
+        "**/public/": true,
+        "**/dist/": true,
+        "**/t_libs/": true,
+        "**/t/": true,
+        "**/templates/": true
+    },
+     "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/.map": true
+    }
+  }

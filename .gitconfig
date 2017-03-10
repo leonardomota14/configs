@@ -1,0 +1,41 @@
+[user]
+	name = MarcosEllys
+	email = marcos.ellys@gmail.com
+[push]
+	default = simple
+[credential]
+       helper = cache --timeout=10800
+[core]
+	editor = vim
+	precomposeunicode = true
+[color]
+	ui = true
+[alias]
+	# Show all aliases available
+	aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+
+	# Show who contributed with summarized changes
+	contributors = shortlog -sne --no-merges
+
+	# Show latest contribuitions
+	history = log -10 --format=format:'%Cgreen%h %Creset• %s (%cN, %ar)' --no-merges
+
+	# log with a text-based graphical representation of the commit history.
+	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
+
+	# Show changes in files in summarized form
+	summary = status -su
+
+	# Show my latest contributions
+	log-me = !git log -10 --author $(git config user.email) --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges
+
+	# Show files changed in last commit
+	last = log -1 --format=format:'%Cgreen%h %Creset• %s (%cN, %ar)' --stat
+[diff]
+	  compactionHeuristic = true
+	  indentHeuristic = true
+	  algorithm = patience
+[interactive]
+	  diffFilter = diff-highlight
+[blame]
+	  date = relative
