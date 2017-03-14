@@ -13,6 +13,8 @@
     "editor.formatOnType": true,
     "editor.wrappingColumn": 0,
     "typescript.useCodeSnippetsOnMethodSuggest": true,
+    "update.channel": "default",
+    "editor.minimap.enabled": true,
     "search.exclude": {
         "**/.git": true,
         "**/node_modules": true,
