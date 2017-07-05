@@ -18,7 +18,10 @@
 	contributors = shortlog -sne --no-merges
 
 	# Show latest contribuitions
-	history = log -10 --format=format:'%Cgreen%h %Creset• %s (%cN, %ar)' --no-merges
+	history = log -10 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges
+
+	# Show all commits today
+	today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
 
 	# log with a text-based graphical representation of the commit history.
 	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
@@ -30,7 +33,13 @@
 	log-me = !git log -10 --author $(git config user.email) --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges
 
 	# Show files changed in last commit
-	last = log -1 --format=format:'%Cgreen%h %Creset• %s (%cN, %ar)' --stat
+	last = log -1 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --stat
+
+	# Show all tags
+	stags = log --no-walk --tags --format=format:'%Cgreen%h %Creset• %Cblue%d %Creset • %s %Cred(%cN, %ar)%Creset'
+
+	# diff improved
+	df    = diff --color --ignore-space-at-eol --ignore-blank-lines
 [diff]
 	  compactionHeuristic = true
 	  indentHeuristic = true
