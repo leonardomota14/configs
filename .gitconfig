@@ -1,50 +1,59 @@
 [user]
-	name = MarcosEllys
-	email = marcos.ellys@gmail.com
+        name = MarcosEllys
+        email = marcos.ellys@gmail.com
 [push]
-	default = simple
+        default = simple
 [credential]
        helper = cache --timeout=10800
 [core]
-	editor = vim
-	precomposeunicode = true
+        editor = vim
+        precomposeunicode = true
 [color]
-	ui = true
+        ui = true
 [alias]
-	# Show all aliases available
-	aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+        # Show all aliases available
+        aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
 
-	# Show who contributed with summarized changes
-	contributors = shortlog -sne --no-merges
+        # Show who contributed with summarized changes
+        contributors = shortlog -sne --no-merges
 
-	# Show latest contribuitions
-	history = log -10 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges
+        # Show latest contribuitions
+        history = log -10 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges
 
-	# Show all commits today
-	today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
+        # Show all commits today
+        today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
 
-	# log with a text-based graphical representation of the commit history.
-	graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
+        # Show all commits specific day
+        # How to use : git day 17-07-13
+        day = "!git log --after=20\"$1\"' 00:00' --before=20\"$1\"' 23:59' --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges #"
 
-	# Show changes in files in summarized form
-	st = status -su
 
-	# Show my latest contributions
-	log-me = !git log -10 --author $(git config user.email) --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges
+        # log with a text-based graphical representation of the commit history.
+        graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
 
-	# Show files changed in last commit
-	last = log -1 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --stat
+        # Show changes in files in summarized form
+        st = status -su
 
-	# Show all tags
-	stags = log --no-walk --tags --format=format:'%Cgreen%h %Creset• %Cblue%d %Creset • %s %Cred(%cN, %ar)%Creset'
+        # Show my latest contributions
+        log-me = !git log -10 --author $(git config user.email) --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges
 
-	# diff improved
-	df    = diff --color --ignore-space-at-eol --ignore-blank-lines
+        # Sow latest contribuitions
+        # How to use : git you MarcosEllys
+        you = !git log -10 --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges --author
+
+        # Show files changed in last commit
+        last = log -1 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --stat
+
+        # Show all tags
+        stags = log --no-walk --tags --format=format:'%Cgreen%h %Creset• %Cblue%d %Creset • %s %Cred(%cN, %ar)%Creset'
+
+        # diff improved
+        df    = diff --color --ignore-space-at-eol --ignore-blank-lines
 [diff]
-	  compactionHeuristic = true
-	  indentHeuristic = true
-	  algorithm = patience
+          compactionHeuristic = true
+          indentHeuristic = true
+          algorithm = patience
 [interactive]
-	  diffFilter = diff-highlight
+          diffFilter = diff-highlight
 [blame]
-	  date = relative
+          date = relative
