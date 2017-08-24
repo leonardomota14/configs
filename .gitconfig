@@ -10,6 +10,9 @@
         precomposeunicode = true
 [color]
         ui = true
+        diff = auto
+        status = auto
+        branch = auto
 [alias]
         # Show all aliases available
         aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
@@ -48,7 +51,19 @@
         stags = log --no-walk --tags --format=format:'%Cgreen%h %Creset• %Cblue%d %Creset • %s %Cred(%cN, %ar)%Creset'
 
         # diff improved
-        df    = diff --color --ignore-space-at-eol --ignore-blank-lines
+        df = diff --color --ignore-space-at-eol --ignore-blank-lines
+
+        # push improved
+        ps = push
+
+        # pull improved
+        pu = pull
+
+        # commit  improved
+        cm = commit -m
+
+        # remove files add for commit
+        unadd = reset HEAD
 [diff]
           compactionHeuristic = true
           indentHeuristic = true
