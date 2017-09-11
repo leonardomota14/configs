@@ -23,13 +23,15 @@
         # Show latest contribuitions
         history = log -10 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges
 
+        # Show all commits of specific file
+        follow = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --follow
+
         # Show all commits today
         today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
 
         # Show all commits specific day
         # How to use : git day 17-07-13
         day = "!git log --after=20\"$1\"' 00:00' --before=20\"$1\"' 23:59' --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges #"
-
 
         # log with a text-based graphical representation of the commit history.
         graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
@@ -58,6 +60,9 @@
 
         # pull improved
         pu = pull
+
+        # checkout improved
+        ch = checkout
 
         # commit  improved
         cm = commit -m
