@@ -26,6 +26,9 @@
         # Show all commits of specific file
         follow = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --follow
 
+        # Show diff in all commits of specific file
+        follow-show = log -p --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size
+
         # Show all commits today
         today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
 
@@ -51,6 +54,9 @@
 
         # Show all tags
         stags = log --no-walk --tags --format=format:'%Cgreen%h %Creset• %Cblue%d %Creset • %s %Cred(%cN, %ar)%Creset'
+
+        # show improved
+        sh = show --numstat --pretty=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset'
 
         # diff improved
         df = diff --color --ignore-space-at-eol --ignore-blank-lines
