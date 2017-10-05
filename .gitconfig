@@ -13,6 +13,8 @@
         diff = auto
         status = auto
         branch = auto
+[grep]
+        extendedRegexp = true
 [alias]
         # Show all aliases available
         aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
@@ -31,6 +33,9 @@
 
         # Show all commits today
         today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
+
+	# Show all commits today count
+	today-count = shortlog -sn --all --no-merges --since=midnight
 
         # Show all commits specific day
         # How to use : git day 17-07-13
