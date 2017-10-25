@@ -8,11 +8,27 @@
 [core]
         editor = vim
         precomposeunicode = true
+[help]
+        autocorrect = 10
 [color]
         ui = true
         diff = auto
         status = auto
         branch = auto
+[color "branch"]
+	current = red reverse
+    	local = blue
+    	remote = green
+[color "diff"]
+    	meta = yellow
+    	frag = magenta
+    	old = red bold
+    	new = green
+    	plain = white
+[color "status"]
+    	added = yellow
+    	changed = green
+    	untracked = cyan
 [grep]
         extendedRegexp = true
 [alias]
@@ -80,6 +96,10 @@
 
         # remove files add for commit
         unadd = reset HEAD
+
+	# conflict/merges
+    	ours = "!f() { git ch --ours $@ && git add $@; }; f"
+    	theirs = "!f() { git ch --theirs $@ && git add $@; }; f"
 [diff]
           compactionHeuristic = true
           indentHeuristic = true
