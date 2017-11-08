@@ -50,8 +50,11 @@
         # Show all commits today
         today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
 
-	# Show all commits today count
-	today-count = shortlog -sn --all --no-merges --since=midnight
+    	# Show all commits today count
+    	today-count = shortlog -sn --all --no-merges --since=midnight
+
+        # Show all files changed today
+        today-files = log --pretty=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --since=midnight --name-only --no-merges
 
         # Show all commits specific day
         # How to use : git day 17-07-13
