@@ -1,6 +1,7 @@
 #!/bin/bash
 
 defaultPrettyFomat='%Cgreen%h %Creset%C(red)•%Creset %s (%C(bold blue) %cN %Creset, %C(yellow) %ar %Creset )'
+pattern_date='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 
 function stats_modify_change() {
 	readarray -t array_emails < <(change_count $1 | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b');
@@ -51,12 +52,10 @@ function show_graph() {
 }
 
 function history_commit_specific_day() {
-	pattern_date='\(1[1-9]\{1\}\)-\([0-9]\{1,2\}\)-\([0-9]\{1,2\}\)'
-
 	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		git log --after="20$1 00:00" --before="20$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges
 	else
-		echo 'invalid date (YY-MM-DD)'
+		echo 'invalid date (YYYY-MM-DD)'
 	fi
 }
 
@@ -70,16 +69,14 @@ function follow_file() {
 
 function winner() {
 	if [ -n "$1" ]; then
-		pattern_date='\([0-9]\{2\}\)-\([0-9]\{2\}\)-\([0-9]\{4\}\)'
-
 		if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 			DATE=$1
 		else
-			echo 'invalid date (DD-MM-YYYY)'
+			echo 'invalid date (YYYY-MM-DD)'
 			exit
 		fi
 	else
-	  DATE=01-11-2017
+	  DATE=17-02-01
 	fi
 
 	PLAYERS=$(git shortlog --all --after=$DATE | grep '^\w' | sed 's/\(.*\) ([0-9]*):/\1/')
