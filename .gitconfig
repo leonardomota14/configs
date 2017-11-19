@@ -38,49 +38,58 @@
         # Show who contributed with summarized changes
         contributors = shortlog -sne --no-merges
 
-        # Show latest contribuitions
-        history = log -10 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges
-
         # Show all commits of specific file
-        follow = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --follow
-
-        # Show diff in all commits of specific file
-        follow-show = log -p --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size
+        follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
 
         # Show all commits today
-        today = log --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges --since=midnight
+        today = "!f() { ~/projetos/configs/git_utils.sh 5 'midnight' $1; }; f"
 
-    	# Show all commits today count
-    	today-count = shortlog -sn --all --no-merges --since=midnight
+        week = "!f() { ~/projetos/configs/git_utils.sh 5 '1 week ago' $1; }; f"
+
+        month = "!f() { ~/projetos/configs/git_utils.sh 5 'last month' $1; }; f"
+
+        # Show all commits today count
+        today-count = "!f() { ~/projetos/configs/git_utils.sh 2 'midnight'; }; f"
+
+        # Show all commits week count
+        week-count = "!f() { ~/projetos/configs/git_utils.sh 2 '1 week ago'; }; f"
+
+        # Show all commits week count
+        month-count = "!f() { ~/projetos/configs/git_utils.sh 2 'last month'; }; f"
+
+    	# Show all stats of the day
+        today-change = "!f() { ~/projetos/configs/git_utils.sh 1 'midnight'; }; f"
+
+        # Show all stats of the week
+        week-change = "!f() { ~/projetos/configs/git_utils.sh 1 '1 week ago'; }; f"
+
+        # Show all stats of the month
+        month-change = "!f() { ~/projetos/configs/git_utils.sh 1 'last month'; }; f"
 
         # Show all files changed today
-        today-files = log --pretty=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --since=midnight --name-only --no-merges
+        today-files = "!f() { ~/projetos/configs/git_utils.sh 4 'midnight' $1; }; f"
+
+        # Show all files changed week
+        week-files = "!f() { ~/projetos/configs/git_utils.sh 4 '1 week ago' $1; }; f"
+
+        # Show all files changed month
+        month-files = "!f() { ~/projetos/configs/git_utils.sh 4 'last month' $1; }; f"
 
         # Show all commits specific day
         # How to use : git day 17-07-13
-        day = "!git log --after=20\"$1\"' 00:00' --before=20\"$1\"' 23:59' --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --no-merges #"
+        day = "!f() { ~/projetos/configs/git_utils.sh 9 $1; }; f"
 
         # log with a text-based graphical representation of the commit history.
-        graph = log --graph -10 --branches --remotes --tags  --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
+        graph = "!f() { ~/projetos/configs/git_utils.sh 8 $1; }; f"
 
         # Show changes in files in summarized form
         st = status -su
 
-        # Show my latest contributions
-        log-me = !git log -10 --author $(git config user.email) --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges
-
-        # Sow latest contribuitions
-        # How to use : git you MarcosEllys
-        you = !git log -10 --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --no-merges --author
-
-        # Show files changed in last commit
-        last = log -1 --format=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset' --stat
-
         # Show all tags
-        stags = log --no-walk --tags --format=format:'%Cgreen%h %Creset• %Cblue%d %Creset • %s %Cred(%cN, %ar)%Creset'
+        stags = "!f() { ~/projetos/configs/git_utils.sh 7; }; f"
 
         # show improved
-        sh = show --numstat --pretty=format:'%Cgreen%h %Creset• %s %Cred(%cN, %ar)%Creset'
+        sh = "!f() { ~/projetos/configs/git_utils.sh 6 $1; }; f"
 
         # diff improved
         df = diff --color --ignore-space-at-eol --ignore-blank-lines
@@ -100,9 +109,9 @@
         # remove files add for commit
         unadd = reset HEAD
 
-	# conflict/merges
-    	ours = "!f() { git ch --ours $@ && git add $@; }; f"
-    	theirs = "!f() { git ch --theirs $@ && git add $@; }; f"
+	   # conflict/merges
+    	ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
+        theirs = "!f() { ~/projetos/configs/git_utils.sh 'theirs'; }; f"
 [diff]
           compactionHeuristic = true
           indentHeuristic = true
