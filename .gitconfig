@@ -76,8 +76,17 @@
         month-files = "!f() { ~/projetos/configs/git_utils.sh 4 'last month' $1; }; f"
 
         # Show all commits specific day
-        # How to use : git day 17-07-13
         day = "!f() { ~/projetos/configs/git_utils.sh 9 $1; }; f"
+
+        winner = "!f() { ~/projetos/configs/git_utils.sh 11 $1; }; f"
+
+        offten-files-today = "!f() { ~/projetos/configs/git_utils.sh 12; }; f"
+
+        offten-files-week = "!f() { ~/projetos/configs/git_utils.sh 13; }; f"
+
+        offten-files-month = "!f() { ~/projetos/configs/git_utils.sh 14; }; f"
+
+        summary-line = "!f() { ~/projetos/configs/git_utils.sh 15; }; f"
 
         # log with a text-based graphical representation of the commit history.
         graph = "!f() { ~/projetos/configs/git_utils.sh 8 $1; }; f"
