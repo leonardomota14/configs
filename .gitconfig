@@ -78,7 +78,7 @@
         # Show all commits specific day
         day = "!f() { ~/projetos/configs/git_utils.sh 9 $1; }; f"
 
-        winner = "!f() { ~/projetos/configs/git_utils.sh 11 $1; }; f"
+        winner = "!f() { ~/projetos/configs/git_utils.sh 11 $1 $2; }; f"
 
         offten-files-today = "!f() { ~/projetos/configs/git_utils.sh 12; }; f"
 

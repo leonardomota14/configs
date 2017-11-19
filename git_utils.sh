@@ -76,13 +76,20 @@ function winner() {
 			exit
 		fi
 	else
-	  DATE=17-02-01
+	  DATE=$(date +%m-%d-%Y) # Today
 	fi
 
-	PLAYERS=$(git shortlog --all --after=$DATE | grep '^\w' | sed 's/\(.*\) ([0-9]*):/\1/')
+	if [ "$2" = "detail" ]; then
+	  DETAIL=y
+	fi
+
+	PLAYERS=$(git shortlog --all --no-merges --after="$DATE 00:00" | grep '^\w' | sed 's/\(.*\) ([0-9]*):/\1/')
 
 	HIGHEST_COMMIT_COUNT=0
 	HIGHEST_COMMIT_LINES=0
+	HIGHEST_COMMIT_LINES_INSERTED=0
+	HIGHEST_COMMIT_LINES_DELETED=0
+	HIGHEST_COMMIT_LINES_CHANGED=0
 
 	echo "Activity after $DATE"
 	echo ""
@@ -94,15 +101,32 @@ function winner() {
 	  exit
 	fi
 
-	IFS='
-	'
-
 	for player in $PLAYERS; do
-	  COMMIT_COUNT=$(git shortlog --all --after=$DATE --author="$player" | grep ^"$player (" | sed "s/$player (\(.*\)):/\1/")
-	  COMMIT_LINES=$(git log      --all --after=$DATE --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $4 + $6} END { print sum }')
+	  COMMIT_COUNT=$(git shortlog --all --no-merges --after="$DATE 00:00" --author="$player" | grep ^"$player (" | sed "s/$player (\(.*\)):/\1/")
+
+	  COMMIT_LINES_INSERTED=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $4} END { print sum }')
+	  COMMIT_LINES_CHANGED=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $6} END { print sum }')
+	  COMMIT_LINES_DELETED=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* deletions' | awk '{ sum += $6} END { print sum }')
+	  COMMIT_LINES=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $4 + $6} END { print sum }')
+
+	  # echo 'COMMIT_COUNT'
+	  # echo $COMMIT_COUNT
+
 
 	  if [ -z "$COMMIT_COUNT" ]; then
 	    COMMIT_COUNT=0
+	  fi
+
+	  if [ -z "$COMMIT_LINES_INSERTED" ]; then
+	    COMMIT_LINES_INSERTED=0
+	  fi
+
+	  if [ -z "$COMMIT_LINES_DELETED" ]; then
+	    COMMIT_LINES_DELETED=0
+	  fi
+
+	  if [ -z "$COMMIT_LINES_CHANGED" ]; then
+	    COMMIT_LINES_CHANGED=0
 	  fi
 
 	  if [ -z "$COMMIT_LINES" ]; then
@@ -119,15 +143,44 @@ function winner() {
 	    HIGHEST_COMMIT_LINES_PLAYER=$player
 	  fi
 
+	  if [ "$COMMIT_LINES_INSERTED" -gt "$HIGHEST_COMMIT_LINES_INSERTED" ]; then
+	    HIGHEST_COMMIT_LINES_INSERTED=$COMMIT_LINES_INSERTED
+	    HIGHEST_COMMIT_LINES_INSERTED_PLAYER=$player
+	  fi
+
+	  if [ "$COMMIT_LINES_CHANGED" -gt "$HIGHEST_COMMIT_LINES_CHANGED" ]; then
+	    HIGHEST_COMMIT_LINES_CHANGED=$COMMIT_LINES_CHANGED
+	    HIGHEST_COMMIT_LINES_CHANGED_PLAYER=$player
+	  fi
+
+	  if [ "$COMMIT_LINES_DELETED" -gt "$HIGHEST_COMMIT_LINES_DELETED" ]; then
+	    HIGHEST_COMMIT_LINES_DELETED=$COMMIT_LINES_DELETED
+	    HIGHEST_COMMIT_LINES_DELETED_PLAYER=$player
+	  fi
+
 	  echo "Results for $player:"
-	  echo "  # of commits        : $COMMIT_COUNT"
-	  echo "  # of lines committed: $COMMIT_LINES"
+	  echo "  # of commits         : $COMMIT_COUNT"
+	  echo "  # of lines inserted  : $COMMIT_LINES_INSERTED"
+	  echo "  # of lines changed   : $COMMIT_LINES_CHANGED"
+	  echo "  # of lines deleted   : $COMMIT_LINES_DELETED"
+	  echo "  # of lines committed : $COMMIT_LINES"
+
+	  if [ -n "$DETAIL" ]; then
+			echo ""
+			echo "  Commit summary"
+			echo ""
+			git shortlog --all --after="$DATE 00:00:00" --author="$player" -w | grep -v ^"$player"
+	  fi
+
 	  echo "====================================="
 	done
 
 	if [ "$HIGHEST_COMMIT_COUNT" -gt 0 ]; then
 	  echo ""
 	  echo "$HIGHEST_COMMIT_COUNT_PLAYER wins in commit count with $HIGHEST_COMMIT_COUNT commits!"
+	  echo "$HIGHEST_COMMIT_LINES_INSERTED_PLAYER wins in number of lines inserted with $HIGHEST_COMMIT_LINES_INSERTED lines!"
+	  echo "$HIGHEST_COMMIT_LINES_CHANGED_PLAYER wins in number of lines changed with $HIGHEST_COMMIT_LINES_CHANGED lines!"
+	  echo "$HIGHEST_COMMIT_LINES_DELETED_PLAYER wins in number of lines deleted with $HIGHEST_COMMIT_LINES_DELETED lines!"
 	  echo "$HIGHEST_COMMIT_LINES_PLAYER wins in number of lines commited with $HIGHEST_COMMIT_LINES lines!"
 
 	  if [ "$HIGHEST_COMMIT_COUNT_PLAYER" = "$HIGHEST_COMMIT_LINES_PLAYER" ]; then
@@ -210,7 +263,7 @@ case "$1" in
 8) show_graph $2;;
 9) history_commit_specific_day $2;;
 10) follow_file $2;;
-11) winner $2;;
+11) winner $2 $3;;
 12) offten_files_today;;
 13) offten_files_week;;
 14) offten_files_month;;
