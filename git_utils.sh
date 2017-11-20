@@ -6,7 +6,7 @@ pattern_date='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 function stats_modify_change() {
 	readarray -t array_emails < <(change_count $1 | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b');
 
-	for f in ${array_emails[@]}; do git log --shortstat --author=$f --since="$1" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed: " files " \t\tlines inserted: ", inserted" \t\tlines deleted: ", deleted" \t\t<'$f'>"}'; done;
+	for f in ${array_emails[@]}; do git log --shortstat --author="$f" --since="$1" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed: " files " \t\tlines inserted: ", inserted" \t\tlines deleted: ", deleted" \t\t<'$f'>"}'; done;
 }
 
 function change_count() {
@@ -19,7 +19,7 @@ function replace_ours_theirs_code() {
 
 function files_changes() {
 	if [ $# -eq 2 ]; then
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --no-merges --author=$2
+		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --no-merges --author="$2"
 	else
 		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --no-merges
 	fi
@@ -27,7 +27,7 @@ function files_changes() {
 
 function history_commit() {
 	if [ $# -eq 2 ]; then
-		git log --format=format:"$defaultPrettyFomat" --no-merges --since="$1" --author=$2
+		git log --format=format:"$defaultPrettyFomat" --no-merges --since="$1" --author="$2"
 	else
 		git log --format=format:"$defaultPrettyFomat" --no-merges --since="$1"
 	fi
@@ -53,7 +53,11 @@ function show_graph() {
 
 function history_commit_specific_day() {
 	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
-		git log --after="20$1 00:00" --before="20$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges
+		if [ ! -z "$2" ]; then
+			git log --after="20$1 00:00:00" --before="20$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges --author="$2"
+		else
+			git log --after="20$1 00:00:00" --before="20$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges
+		fi
 	else
 		echo 'invalid date (YYYY-MM-DD)'
 	fi
@@ -68,28 +72,43 @@ function follow_file() {
 }
 
 function winner() {
-	if [ -n "$1" ]; then
+	if [ $# -eq 2 ]; then
 		if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 			DATE=$1
 		else
 			echo 'invalid date (YYYY-MM-DD)'
 			exit
 		fi
-	else
-	  DATE=$(date +%m-%d-%Y) # Today
+		if [ "$2" = "detail" ]; then
+		  DETAIL=y
+		fi
+	fi
+	if [ $# -eq 1 ]; then
+		if [ "$1" = "detail" ]; then
+		  DETAIL=y
+		 else
+		 	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
+		 		DATE=$1
+		 	else
+		 		echo 'invalid date (YYYY-MM-DD)'
+		 		exit
+		 	fi
+		fi
+	fi
+	if [ $# -eq 0 ]; then
+		DATE=$(date +%m-%d-%Y) # Today
 	fi
 
-	if [ "$2" = "detail" ]; then
-	  DETAIL=y
-	fi
-
-	PLAYERS=$(git shortlog --all --no-merges --after="$DATE 00:00" | grep '^\w' | sed 's/\(.*\) ([0-9]*):/\1/')
+	PLAYERS=$(git shortlog -e --all --after="$DATE 00:00:00" | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b')
 
 	HIGHEST_COMMIT_COUNT=0
-	HIGHEST_COMMIT_LINES=0
+	HIGHEST_FILES_COUNT=0
 	HIGHEST_COMMIT_LINES_INSERTED=0
 	HIGHEST_COMMIT_LINES_DELETED=0
-	HIGHEST_COMMIT_LINES_CHANGED=0
+	LOWEREST_COMMIT_COUNT=500
+	LOWEREST_FILES_COUNT=500
+	LOWEREST_COMMIT_LINES_INSERTED=500
+	LOWEREST_COMMIT_LINES_DELETED=500
 
 	echo "Activity after $DATE"
 	echo ""
@@ -101,20 +120,20 @@ function winner() {
 	  exit
 	fi
 
+
 	for player in $PLAYERS; do
-	  COMMIT_COUNT=$(git shortlog --all --no-merges --after="$DATE 00:00" --author="$player" | grep ^"$player (" | sed "s/$player (\(.*\)):/\1/")
 
-	  COMMIT_LINES_INSERTED=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $4} END { print sum }')
-	  COMMIT_LINES_CHANGED=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $6} END { print sum }')
-	  COMMIT_LINES_DELETED=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* deletions' | awk '{ sum += $6} END { print sum }')
-	  COMMIT_LINES=$(git log --all --no-merges --after="$DATE  00:00" --author="$player" --pretty=format: --stat | grep '[0-9]* files changed, [0-9]* insertions.*, [0-9]* deletions' | awk '{ sum += $4 + $6} END { print sum }')
-
-	  # echo 'COMMIT_COUNT'
-	  # echo $COMMIT_COUNT
-
+	  COMMIT_COUNT=$(git shortlog -sn --all --no-merges --after="$DATE 00:00:00" --author="$player" --pretty=format: --stat | grep '[0-9]*' | awk '{ sum += $1} END { print sum }')
+	  FILES_COUNT=$(git log --shortstat --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print files}')
+	  COMMIT_LINES_INSERTED=$(git log --shortstat --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print inserted}')
+	  COMMIT_LINES_DELETED=$(git log --shortstat --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print deleted}')
 
 	  if [ -z "$COMMIT_COUNT" ]; then
 	    COMMIT_COUNT=0
+	  fi
+
+	  if [ -z "$FILES_COUNT" ]; then
+	    FILES_COUNT=0
 	  fi
 
 	  if [ -z "$COMMIT_LINES_INSERTED" ]; then
@@ -125,32 +144,20 @@ function winner() {
 	    COMMIT_LINES_DELETED=0
 	  fi
 
-	  if [ -z "$COMMIT_LINES_CHANGED" ]; then
-	    COMMIT_LINES_CHANGED=0
-	  fi
-
-	  if [ -z "$COMMIT_LINES" ]; then
-	    COMMIT_LINES=0
-	  fi
-
 	  if [ "$COMMIT_COUNT" -gt "$HIGHEST_COMMIT_COUNT" ]; then
 	    HIGHEST_COMMIT_COUNT=$COMMIT_COUNT
 	    HIGHEST_COMMIT_COUNT_PLAYER=$player
 	  fi
 
-	  if [ "$COMMIT_LINES" -gt "$HIGHEST_COMMIT_LINES" ]; then
-	    HIGHEST_COMMIT_LINES=$COMMIT_LINES
-	    HIGHEST_COMMIT_LINES_PLAYER=$player
+	  if [ "$FILES_COUNT" -gt "$HIGHEST_FILES_COUNT" ]; then
+	    HIGHEST_FILES_COUNT=$FILES_COUNT
+	    HIGHEST_FILES_COUNT_PLAYER=$player
 	  fi
+
 
 	  if [ "$COMMIT_LINES_INSERTED" -gt "$HIGHEST_COMMIT_LINES_INSERTED" ]; then
 	    HIGHEST_COMMIT_LINES_INSERTED=$COMMIT_LINES_INSERTED
 	    HIGHEST_COMMIT_LINES_INSERTED_PLAYER=$player
-	  fi
-
-	  if [ "$COMMIT_LINES_CHANGED" -gt "$HIGHEST_COMMIT_LINES_CHANGED" ]; then
-	    HIGHEST_COMMIT_LINES_CHANGED=$COMMIT_LINES_CHANGED
-	    HIGHEST_COMMIT_LINES_CHANGED_PLAYER=$player
 	  fi
 
 	  if [ "$COMMIT_LINES_DELETED" -gt "$HIGHEST_COMMIT_LINES_DELETED" ]; then
@@ -158,38 +165,58 @@ function winner() {
 	    HIGHEST_COMMIT_LINES_DELETED_PLAYER=$player
 	  fi
 
+	  if [ "$COMMIT_COUNT" -lt "$LOWEREST_COMMIT_COUNT" ]; then
+	    LOWEREST_COMMIT_COUNT=$COMMIT_COUNT
+	    LOWEREST_COMMIT_COUNT_PLAYER=$player
+	  fi
+
+	  if [ "$FILES_COUNT" -lt "$LOWEREST_FILES_COUNT" ]; then
+	    LOWEREST_FILES_COUNT=$FILES_COUNT
+	    LOWEREST_FILES_COUNT_PLAYER=$player
+	  fi
+
+
+	  if [ "$COMMIT_LINES_INSERTED" -lt "$LOWEREST_COMMIT_LINES_INSERTED" ]; then
+	    LOWEREST_COMMIT_LINES_INSERTED=$COMMIT_LINES_INSERTED
+	    LOWEREST_COMMIT_LINES_INSERTED_PLAYER=$player
+	  fi
+
+	  if [ "$COMMIT_LINES_DELETED" -lt "$LOWEREST_COMMIT_LINES_DELETED" ]; then
+	    LOWEREST_COMMIT_LINES_DELETED=$COMMIT_LINES_DELETED
+	    LOWEREST_COMMIT_LINES_DELETED_PLAYER=$player
+	  fi
+
 	  echo "Results for $player:"
+	  echo ""
 	  echo "  # of commits         : $COMMIT_COUNT"
+	  echo "  # of files changed   : $FILES_COUNT"
 	  echo "  # of lines inserted  : $COMMIT_LINES_INSERTED"
-	  echo "  # of lines changed   : $COMMIT_LINES_CHANGED"
 	  echo "  # of lines deleted   : $COMMIT_LINES_DELETED"
-	  echo "  # of lines committed : $COMMIT_LINES"
 
 	  if [ -n "$DETAIL" ]; then
 			echo ""
-			echo "  Commit summary"
+			echo "Commit summary"
 			echo ""
-			git shortlog --all --after="$DATE 00:00:00" --author="$player" -w | grep -v ^"$player"
+			git shortlog --no-merges --after="$DATE 00:00:00" --pretty=format:"$defaultPrettyFomat" --author="$player"
 	  fi
 
-	  echo "====================================="
+	  echo "========================================================"
 	done
 
-	if [ "$HIGHEST_COMMIT_COUNT" -gt 0 ]; then
-	  echo ""
-	  echo "$HIGHEST_COMMIT_COUNT_PLAYER wins in commit count with $HIGHEST_COMMIT_COUNT commits!"
-	  echo "$HIGHEST_COMMIT_LINES_INSERTED_PLAYER wins in number of lines inserted with $HIGHEST_COMMIT_LINES_INSERTED lines!"
-	  echo "$HIGHEST_COMMIT_LINES_CHANGED_PLAYER wins in number of lines changed with $HIGHEST_COMMIT_LINES_CHANGED lines!"
-	  echo "$HIGHEST_COMMIT_LINES_DELETED_PLAYER wins in number of lines deleted with $HIGHEST_COMMIT_LINES_DELETED lines!"
-	  echo "$HIGHEST_COMMIT_LINES_PLAYER wins in number of lines commited with $HIGHEST_COMMIT_LINES lines!"
-
-	  if [ "$HIGHEST_COMMIT_COUNT_PLAYER" = "$HIGHEST_COMMIT_LINES_PLAYER" ]; then
-	    FIRST_NAME=$(echo "$HIGHEST_COMMIT_COUNT_PLAYER" | awk '{ print $1 }')
-
-	    echo ""
-	    echo "$FIRST_NAME is the overall winner!!"
-	  fi
-	fi
+  echo "Results for Wins:"
+  echo ""
+  echo "  # $HIGHEST_COMMIT_COUNT_PLAYER wins in commit count with $HIGHEST_COMMIT_COUNT"
+  echo "  # $HIGHEST_FILES_COUNT_PLAYER wins in files count with $HIGHEST_FILES_COUNT"
+  echo "  # $HIGHEST_COMMIT_LINES_INSERTED_PLAYER wins in inserted lines : $HIGHEST_COMMIT_LINES_INSERTED"
+  echo "  # $HIGHEST_COMMIT_LINES_DELETED_PLAYER wins in deleted lines : $HIGHEST_COMMIT_LINES_DELETED"
+  echo ""
+  echo "Results for Losts:"
+  echo ""
+  echo "  # $LOWEREST_COMMIT_COUNT_PLAYER lost in commit count with $LOWEREST_COMMIT_COUNT"
+  echo "  # $LOWEREST_FILES_COUNT_PLAYER lost in files count ith $LOWEREST_FILES_COUNT"
+  echo "  # $LOWEREST_COMMIT_LINES_INSERTED_PLAYER lost in inserted lines with $LOWEREST_COMMIT_LINES_INSERTED"
+  echo "  # $LOWEREST_COMMIT_LINES_DELETED_PLAYER lost in deleted lines with $LOWEREST_COMMIT_LINES_DELETED"
+	echo "========================================================"
 }
 
 function offten_files_today() {
@@ -261,7 +288,7 @@ case "$1" in
 6) show_commit $2;;
 7) show_tags;;
 8) show_graph $2;;
-9) history_commit_specific_day $2;;
+9) history_commit_specific_day $2 $3;;
 10) follow_file $2;;
 11) winner $2 $3;;
 12) offten_files_today;;
