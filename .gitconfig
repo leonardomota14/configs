@@ -6,7 +6,7 @@
 [credential]
        helper = cache --timeout=10800
 [core]
-        editor = vim
+        editor = nano
         precomposeunicode = true
         pager =  ~/projetos/configs/diff-so-fancy | less --tabs=4 -RFX
 [help]
@@ -16,7 +16,7 @@
         diff = auto
         status = auto
         branch = auto
-[color "branch"]
+[color "banch"]
 	current = red reverse
     	local = blue
     	remote = green

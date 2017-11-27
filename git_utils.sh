@@ -4,13 +4,13 @@ defaultPrettyFomat='%Cgreen%h %Creset%C(red)•%Creset %s (%C(bold blue) %cN %Cr
 pattern_date='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 
 function stats_modify_change() {
-	readarray -t array_emails < <(change_count $1 | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b');
+	readarray -t array_emails < <(change_count $1 | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b' | sort -fu);
 
 	for f in ${array_emails[@]}; do git log --shortstat --author="$f" --since="$1" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed: " files " \t\tlines inserted: ", inserted" \t\tlines deleted: ", deleted" \t\t<'$f'>"}'; done;
 }
 
 function change_count() {
-	git shortlog -sne --no-merges --since="$1"
+	git shortlog -sne --no-merges --since="$1" | sort -fu
 }
 
 function replace_ours_theirs_code() {
@@ -99,7 +99,7 @@ function winner() {
 		DATE=$(date +%m-%d-%Y) # Today
 	fi
 
-	PLAYERS=$(git shortlog -e --all --after="$DATE 00:00:00" | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b')
+	PLAYERS=$(git shortlog -e --all --after="$DATE 00:00:00" | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b' | sort -fu)
 
 	HIGHEST_COMMIT_COUNT=0
 	HIGHEST_FILES_COUNT=0
@@ -280,11 +280,11 @@ function result() {
 }
 
 case "$1" in
-1) stats_modify_change $2 ;;
+1) stats_modify_change "$2" ;;
 2) change_count $2 ;;
 3) replace_ours_theirs_code $2 ;;
-4) files_changes $2 $3;;
-5) history_commit $2 $3;;
+4) files_changes "$2" $3;;
+5) history_commit "$2" $3;;
 6) show_commit $2;;
 7) show_tags;;
 8) show_graph $2;;
