@@ -50,6 +50,9 @@
         # Show all commits of specific file
         follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
 
+        # Show al commits of specific file displaying the changes
+        follow-show = "!f() { ~/projetos/configs/git_utils.sh 16 $1; }; f"
+
         # Show all commits today
         today = "!f() { ~/projetos/configs/git_utils.sh 5 'midnight' $1; }; f"
 

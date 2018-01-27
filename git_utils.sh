@@ -54,9 +54,13 @@ function show_graph() {
 function history_commit_specific_day() {
 	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		if [ ! -z "$2" ]; then
-			git log --after="20$1 00:00:00" --before="20$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges --author="$2"
+			if date -d $(echo "$2" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
+				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --no-merges
+			else
+				echo 'invalid date (YYYY-MM-DD)'
+			fi
 		else
-			git log --after="20$1 00:00:00" --before="20$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges
+			git log --after="$1 00:00:00" --before="$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges
 		fi
 	else
 		echo 'invalid date (YYYY-MM-DD)'
@@ -66,6 +70,14 @@ function history_commit_specific_day() {
 function follow_file() {
 	if [ ! -z "$1" ]; then
 		git log --format=format:"$defaultPrettyFomat" --no-merges --follow "$1"
+	else
+		echo 'Path is required'
+	fi
+}
+
+function follow_file_displaying() {
+	if [ ! -z "$1" ]; then
+		git log -p --format=format:"$defaultPrettyFomat" --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size "$1"
 	else
 		echo 'Path is required'
 	fi
@@ -295,4 +307,5 @@ case "$1" in
 13) offten_files_week;;
 14) offten_files_month;;
 15) summary_line;;
+16) follow_file_displaying $2;;
 esac
