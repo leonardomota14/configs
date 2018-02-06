@@ -125,6 +125,9 @@
         # checkout improved
         ch = checkout
 
+        # check update
+        cu = "!f() { ~/projetos/configs/git_utils.sh 17; }; f"
+
         # commit  improved
         cm = commit -m
 
@@ -133,7 +136,7 @@
 
 	   # conflict/merges
     	ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
-        theirs = "!f() { ~/projetos/configs/git_utils.sh 'theirs'; }; f"
+        theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
 [diff]
           compactionHeuristic = true
           indentHeuristic = true

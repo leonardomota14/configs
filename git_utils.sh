@@ -291,6 +291,15 @@ function result() {
     ' | column -t -s,
 }
 
+function check_new_updates() {
+	git remote show origin | grep 'local out of date' &> /dev/null;
+	if [ $? == 0 ]; then
+	  notify-send 'Git updates' 'There are updates available'
+	else
+	  notify-send 'Git updates' 'No there are updates available'
+	fi
+}
+
 case "$1" in
 1) stats_modify_change "$2" ;;
 2) change_count $2 ;;
@@ -308,4 +317,5 @@ case "$1" in
 14) offten_files_month;;
 15) summary_line;;
 16) follow_file_displaying $2;;
+17) check_new_updates;;
 esac
