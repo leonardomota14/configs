@@ -1,147 +1,158 @@
 [user]
-        name = MarcosEllys
-        email = marcos.ellys@gmail.com
+    name = MarcosEllys
+    email = marcos.ellys@gmail.com
 [push]
-        default = simple
+    default = simple
 [credential]
-       helper = cache --timeout=10800
+    helper = cache --timeout=10800
 [core]
-        editor = nano
-        precomposeunicode = true
-        pager =  ~/projetos/configs/diff-so-fancy | less --tabs=4 -RFX
+    editor = nano
+    precomposeunicode = true
+    pager =  ~/projetos/configs/diff-so-fancy | less --tabs=4 -RFX
 [help]
-        autocorrect = 10
+    autocorrect = 10
 [color]
-        ui = true
-        diff = auto
-        status = auto
-        branch = auto
+    ui = true
+    diff = auto
+    status = auto
+    branch = auto
 [color "banch"]
-	current = red reverse
-    	local = blue
-    	remote = green
+    current = red reverse
+    local = blue
+    remote = green
 [color "diff"]
-    	meta = 227
-    	frag = magenta bold
-        commit = 227 bold
-    	old = red bold
-    	new = green
-    	plain = white
-        whitespace = red reverse
+    meta = 227
+    frag = magenta bold
+    commit = 227 bold
+    old = red bold
+    new = green
+    plain = white
+    whitespace = red reverse
 [color "diff-highlight"]
-        oldNormal = red bold
-        oldHighlight = red bold 52
-        newNormal = green bold
-        newHighlight = green bold 22
-
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "status"]
-    	added = yellow
-    	changed = green
-    	untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 [grep]
-        extendedRegexp = true
+    extendedRegexp = true
 [alias]
-        # Show all aliases available
-        aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+    # Show all aliases available
+    aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
 
-        # Show who contributed with summarized changes
-        contributors = shortlog -sne --no-merges
+    # Show who contributed with summarized changes
+    contributors = shortlog -sne --no-merges
 
-        # Show all commits of specific file
-        follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
+    # Show all commits of specific file
+    follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
 
-        # Show al commits of specific file displaying the changes
-        follow-show = "!f() { ~/projetos/configs/git_utils.sh 16 $1; }; f"
+    # Show al commits of specific file displaying the changes
+    follow-show = "!f() { ~/projetos/configs/git_utils.sh 16 $1; }; f"
 
-        # Show all commits today
-        today = "!f() { ~/projetos/configs/git_utils.sh 5 'midnight' $1; }; f"
+    # Show all commits today
+    today = "!f() { ~/projetos/configs/git_utils.sh 5 'midnight' $1; }; f"
 
-        week = "!f() { ~/projetos/configs/git_utils.sh 5 '1 week ago' $1; }; f"
+    # Show all commits week
+    week = "!f() { ~/projetos/configs/git_utils.sh 5 '1 week ago' $1; }; f"
 
-        month = "!f() { ~/projetos/configs/git_utils.sh 5 'last month' $1; }; f"
+    # Show all commits month
+    month = "!f() { ~/projetos/configs/git_utils.sh 5 'last month' $1; }; f"
 
-        # Show all commits today count
-        today-count = "!f() { ~/projetos/configs/git_utils.sh 2 'midnight'; }; f"
+    # Show all commits today count
+    today-count = "!f() { ~/projetos/configs/git_utils.sh 2 'midnight'; }; f"
 
-        # Show all commits week count
-        week-count = "!f() { ~/projetos/configs/git_utils.sh 2 '1 week ago'; }; f"
+    # Show all commits week count
+    week-count = "!f() { ~/projetos/configs/git_utils.sh 2 '1 week ago'; }; f"
 
-        # Show all commits week count
-        month-count = "!f() { ~/projetos/configs/git_utils.sh 2 'last month'; }; f"
+    # Show all commits week count
+    month-count = "!f() { ~/projetos/configs/git_utils.sh 2 'last month'; }; f"
 
-    	# Show all stats of the day
-        today-change = "!f() { ~/projetos/configs/git_utils.sh 1 'midnight'; }; f"
+    # Show all stats of the day
+    today-change = "!f() { ~/projetos/configs/git_utils.sh 1 'midnight'; }; f"
 
-        # Show all stats of the week
-        week-change = "!f() { ~/projetos/configs/git_utils.sh 1 '1 week ago'; }; f"
+    # Show all stats of the week
+    week-change = "!f() { ~/projetos/configs/git_utils.sh 1 '1 week ago'; }; f"
 
-        # Show all stats of the month
-        month-change = "!f() { ~/projetos/configs/git_utils.sh 1 'last month'; }; f"
+    # Show all stats of the month
+    month-change = "!f() { ~/projetos/configs/git_utils.sh 1 'last month'; }; f"
 
-        # Show all files changed today
-        today-files = "!f() { ~/projetos/configs/git_utils.sh 4 'midnight' $1; }; f"
+    # Show all files changed today
+    today-files = "!f() { ~/projetos/configs/git_utils.sh 4 'midnight' $1; }; f"
 
-        # Show all files changed week
-        week-files = "!f() { ~/projetos/configs/git_utils.sh 4 '1 week ago' $1; }; f"
+    # Show all files changed week
+    week-files = "!f() { ~/projetos/configs/git_utils.sh 4 '1 week ago' $1; }; f"
 
-        # Show all files changed month
-        month-files = "!f() { ~/projetos/configs/git_utils.sh 4 'last month' $1; }; f"
+    # Show all files changed month
+    month-files = "!f() { ~/projetos/configs/git_utils.sh 4 'last month' $1; }; f"
 
-        # Show all commits specific day
-        day = "!f() { ~/projetos/configs/git_utils.sh 9 $1 $2; }; f"
+    # Show all commits specific day
+    day = "!f() { ~/projetos/configs/git_utils.sh 9 $1 $2; }; f"
 
-        winner = "!f() { ~/projetos/configs/git_utils.sh 11 $1 $2; }; f"
+    # Show status  of commits,files and lines
+    winner = "!f() { ~/projetos/configs/git_utils.sh 11 $1 $2; }; f"
 
-        offten-files-today = "!f() { ~/projetos/configs/git_utils.sh 12; }; f"
+    # Show files most edited today
+    offten-files-today = "!f() { ~/projetos/configs/git_utils.sh 12; }; f"
 
-        offten-files-week = "!f() { ~/projetos/configs/git_utils.sh 13; }; f"
+    # Show files most edited week
+    offten-files-week = "!f() { ~/projetos/configs/git_utils.sh 13; }; f"
 
-        offten-files-month = "!f() { ~/projetos/configs/git_utils.sh 14; }; f"
+    # Show files most edited month
+    offten-files-month = "!f() { ~/projetos/configs/git_utils.sh 14; }; f"
 
-        summary-line = "!f() { ~/projetos/configs/git_utils.sh 15; }; f"
+    # Show summary of project
+    summary-line = "!f() { ~/projetos/configs/git_utils.sh 15; }; f"
 
-        # log with a text-based graphical representation of the commit history.
-        graph = "!f() { ~/projetos/configs/git_utils.sh 8 $1; }; f"
+    # log with a text-based graphical representation of the commit history.
+    graph = "!f() { ~/projetos/configs/git_utils.sh 8 $1; }; f"
 
-        # Show changes in files in summarized form
-        st = status -su
+    # Show changes in files in summarized form
+    st = status -su
 
-        # Show all tags
-        stags = "!f() { ~/projetos/configs/git_utils.sh 7; }; f"
+    # Show all tags
+    stags = "!f() { ~/projetos/configs/git_utils.sh 7; }; f"
 
-        # show improved
-        sh = "!f() { ~/projetos/configs/git_utils.sh 6 $1; }; f"
+    # show improved
+    sh = "!f() { ~/projetos/configs/git_utils.sh 6 $1; }; f"
 
-        # diff improved
-        df = diff --color --ignore-space-at-eol --ignore-blank-lines
+    # diff improved
+    df = diff --color --ignore-space-at-eol --ignore-blank-lines
 
+    # push improved
+    ps = push
 
-        # push improved
-        ps = push
+    # pull improved
+    pu = pull
 
-        # pull improved
-        pu = pull
+    # checkout improved
+    ch = checkout
 
-        # checkout improved
-        ch = checkout
+    # check update
+    cu = "!f() { ~/projetos/configs/git_utils.sh 17; }; f"
 
-        # check update
-        cu = "!f() { ~/projetos/configs/git_utils.sh 17; }; f"
+    # commit  improved
+    cm = commit -m
 
-        # commit  improved
-        cm = commit -m
+    # commit  improved
+    ucm = reset HEAD~
 
-        # remove files add for commit
-        unadd = reset HEAD
+    # remove files add for commit
+    unadd = reset HEAD
 
-	   # conflict/merges
-    	ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
-        theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
+    # Copy complete file in specific version
+    cp = "!f() { ~/projetos/configs/git_utils.sh 18 $1 $2; }; f"
+
+    # conflict/merges
+    ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
+    theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
 [diff]
-          compactionHeuristic = true
-          indentHeuristic = true
-          algorithm = patience
+    compactionHeuristic = true
+    indentHeuristic = true
+    algorithm = patience
 [interactive]
-          diffFilter = diff-highlight
+    diffFilter = diff-highlight
 [blame]
-          date = relative
+    date = relative

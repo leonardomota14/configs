@@ -91,12 +91,12 @@ function winner() {
 			echo 'invalid date (YYYY-MM-DD)'
 			exit
 		fi
-		if [ "$2" = "detail" ]; then
+		if [ "$2" = "-d" ]; then
 		  DETAIL=y
 		fi
 	fi
 	if [ $# -eq 1 ]; then
-		if [ "$1" = "detail" ]; then
+		if [ "$1" = "-d" ]; then
 		  DETAIL=y
 		 else
 		 	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
@@ -300,6 +300,20 @@ function check_new_updates() {
 	fi
 }
 
+function code_version() {
+	if [ $# -eq 2 ]; then
+		git show "$1":"$2" | xclip -sel clip;
+		exit
+	fi
+	if [ $# -eq 1 ]; then
+		echo 'Insert Path to File'
+	else
+		echo 'Insert COMMIT_SHA1 and Path to File'
+		exit
+	fi
+
+}
+
 case "$1" in
 1) stats_modify_change "$2" ;;
 2) change_count $2 ;;
@@ -318,4 +332,5 @@ case "$1" in
 15) summary_line;;
 16) follow_file_displaying $2;;
 17) check_new_updates;;
+18) code_version $2 $3;;
 esac
