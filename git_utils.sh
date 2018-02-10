@@ -294,9 +294,9 @@ function result() {
 function check_new_updates() {
 	git remote show origin | grep 'local out of date' &> /dev/null;
 	if [ $? == 0 ]; then
-	  notify-send 'Git updates' 'There are updates available'
+	  notify-send -i gtk-dialog-info -u critical 'Git updates' 'There are updates available'
 	else
-	  notify-send 'Git updates' 'No there are updates available'
+	  notify-send -i gtk-dialog-info -u critical 'Git updates' 'No there are updates available'
 	fi
 }
 
