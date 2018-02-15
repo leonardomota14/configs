@@ -292,7 +292,7 @@ function result() {
 }
 
 function check_new_updates() {
-	git remote show origin | grep 'local out of date' &> /dev/null;
+	git remote show origin | grep 'master   pushes to master   (local out of date)' &> /dev/null;
 	if [ $? == 0 ]; then
 	  notify-send -i gtk-dialog-info -u critical 'Git updates' 'There are updates available'
 	else
@@ -314,6 +314,12 @@ function code_version() {
 
 }
 
+function pull_plus() {
+	git stash
+	git pull
+	git stash pop
+}
+
 case "$1" in
 1) stats_modify_change "$2" ;;
 2) change_count $2 ;;
@@ -333,4 +339,5 @@ case "$1" in
 16) follow_file_displaying $2;;
 17) check_new_updates;;
 18) code_version $2 $3;;
+19) pull_plus;;
 esac

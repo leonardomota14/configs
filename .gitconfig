@@ -127,6 +127,9 @@
     # pull improved
     pu = pull
 
+    # pull improved saving stash of files
+    puplus = "!f() { ~/projetos/configs/git_utils.sh 19; }; f"
+
     # checkout improved
     ch = checkout
 
@@ -143,7 +146,7 @@
     unadd = reset HEAD
 
     # Copy complete file in specific version
-    cp = "!f() { ~/projetos/configs/git_utils.sh 18 $1 $2; }; f"
+    cv = "!f() { ~/projetos/configs/git_utils.sh 18 $1 $2; }; f"
 
     # conflict/merges
     ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
