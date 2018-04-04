@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Front",
+      "type": "chrome",
+      "request": "launch",
+      "trace": true,
+      "url": "http://localhost:4000",
+      "runtimeArgs": [
+        "--new-window",
+        "--user-data-dir=/home/user",
+        "--remote-debugging-port=9222"
+      ],
+      "webRoot": "${workspaceRoot}/front/src/",
+      "sourceMaps": true,
+      "breakOnLoad": true,
+      "disableNetworkCache": true,
+      "skipFiles": [
+        "/**/node_modules/**/*.js",
+        "/**/bower_components/**/*.js"
+      ],
+    }
+  ]
+}

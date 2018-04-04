@@ -1,0 +1,12 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+  { "key": "ctrl+shift+q", "command": "workbench.action.toggleMaximizedPanel" },
+  { "key": "ctrl+t", "command": "workbench.action.terminal.toggleTerminal" },
+  { "key": "ctrl+x", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
+  { "key": "ctrl+p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
+  { "key": "ctrl+n", "command": "workbench.action.terminal.new", "when": "terminalFocus" },
+  { "key": "ctrl+`", "command": "workbench.action.terminal.focus", "when": "!terminalFocus" },
+  { "key": "ctrl+`", "command": "workbench.action.focusActiveEditorGroup", "when": "terminalFocus" },
+  { "key": "ctrl+alt+b", "command": "workbench.action.tasks.runTask", "args": "Run Back" },
+  { "key": "ctrl+alt+f", "command": "workbench.action.tasks.runTask", "args": "Run Front" }
+]
