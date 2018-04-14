@@ -125,7 +125,7 @@
     ps = push
 
     # pull improved
-    pu = pull --rebase
+    pu = pull --ff-only
 
     # pull improved saving stash of files
     puplus = "!f() { ~/projetos/configs/git_utils.sh 19; }; f"
