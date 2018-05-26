@@ -1,6 +1,7 @@
 #!/bin/bash
 
-defaultPrettyFomat='%Cgreen%h %Creset%C(red)•%Creset %s (%C(bold blue) %cN %Creset, %C(yellow) %ar %Creset )'
+defaultPrettyFomat='%C(green)%h %C(reset)%C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
+PrettyFomatGraph='%C(green)%h %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(reset)%C(bold yellow)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 pattern_date='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 
 function stats_modify_change() {
@@ -38,15 +39,15 @@ function show_commit() {
 }
 
 function show_tags() {
-	git log --no-walk --tags --format=format:"$defaultPrettyFomat"
+	git log --no-walk --tags --format=format:"$PrettyFomatGraph"
 }
 
 function show_graph() {
 	# Check if limit is defined
 	if [ ! -z "$1" ]; then
-		git log --graph --branches --remotes --tags  --format=format:"$defaultPrettyFomat" --date-order -"$1"
+		git log --graph --branches --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -"$1"
 	else
-		git log --graph --branches --remotes --tags  --format=format:"$defaultPrettyFomat" --date-order -10
+		git log --graph --branches --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -10
 	fi
 
 }
@@ -300,9 +301,28 @@ function check_new_updates() {
 	fi
 }
 
+#
+# Name: Code Version
+# Description: used to diff file in specif version
+#
+# Command:
+# git cv commit_hash path/to/file
+#
+# Input:
+#
+# $1 {COMMIT_HAS} Hash Of Commit
+# $2 {PATH_FILE} Location of File
+#
+# Output:
+#
+# VSCODE with diff files between version
+#
+
 function code_version() {
 	if [ $# -eq 2 ]; then
-		git show "$1":"$2" | xclip -sel clip;
+		# git show "$1":"$2" | xclip -sel clip;
+		git show "$1":"$2" > "$2".bkp 2>&1
+		code -d "$2" "$2".bkp
 		exit
 	fi
 	if [ $# -eq 1 ]; then
