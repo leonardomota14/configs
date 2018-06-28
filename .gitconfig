@@ -140,7 +140,10 @@
     cm = commit -m
 
     # blame  improved
-    bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git name-rev --name-only HEAD)/$1; }; f"
+    bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"
+
+    # Open Github Issue
+    issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
 
     # commit  improved
     ucm = reset HEAD~
