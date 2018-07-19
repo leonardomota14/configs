@@ -15,9 +15,9 @@
   { "key": "ctrl+d", "command": "editor.action.copyLinesDownAction", "when": "editorFocus && !editorReadonly && !editorHasSelection" },
   { "key": "ctrl+m", "command": "editor.action.jumpToBracket", "when": "editorFocus" },
   { "key": "ctrl+shift+/", "command": "editor.action.blockComment", "when": "editorFocus && !editorReadonly" },
-  { "key": "shift+f9", "command": "workbench.debug.viewlet.action.removeAllBreakpoints" },
   { "key": "ctrl+shift+w", "command": "-workbench.action.closeWindow" },
   { "key": "ctrl+shift+[", "command": "editor.fold", "when": "editorTextFocus" },
   { "key": "ctrl+shift+]", "command": "editor.unfold", "when": "editorTextFocus" },
+  { "key": "ctrl+w", "command": "-workbench.action.closeWindow", "when": "!editorIsOpen && !multipleEditorGroups" }
   { "key": "ctrl+w", "command": "-workbench.action.closeWindow", "when": "!editorIsOpen" }
 ]
