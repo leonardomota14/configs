@@ -2,7 +2,7 @@
 
 defaultPrettyFomat='%C(green)%h %C(reset)%C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 PrettyFomatGraph='%C(green)%h %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(reset)%C(bold yellow)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
-pattern_date='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
+patternDate='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 
 function stats_modify_change() {
 	readarray -t array_emails < <(change_count $1 | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b' | sort -fu);
@@ -53,9 +53,9 @@ function show_graph() {
 }
 
 function history_commit_specific_day() {
-	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
+	if date -d $(echo "$1" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		if [ ! -z "$2" ]; then
-			if date -d $(echo "$2" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
+			if date -d $(echo "$2" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --no-merges
 			else
 				echo 'invalid date (YYYY-MM-DD)'
@@ -86,7 +86,7 @@ function follow_file_displaying() {
 
 function winner() {
 	if [ $# -eq 2 ]; then
-		if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
+		if date -d $(echo "$1" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 			DATE=$1
 		else
 			echo 'invalid date (YYYY-MM-DD)'
@@ -100,7 +100,7 @@ function winner() {
 		if [ "$1" = "-d" ]; then
 		  DETAIL=y
 		 else
-		 	if date -d $(echo "$1" | sed -n "/$pattern_date/ { s/$pattern_date/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
+		 	if date -d $(echo "$1" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		 		DATE=$1
 		 	else
 		 		echo 'invalid date (YYYY-MM-DD)'
@@ -340,6 +340,11 @@ function pull_plus() {
 	git stash pop
 }
 
+function assigned_issues() {
+	# curl -u "$(git config user.name):$tokenGithub" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq '.[] | {id: .number,title: .title,body: .body, author: .user.login,labels: [.labels[].name]}'
+	curl -u "$(git config user.name):$tokenGithub" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq -r '["ID","NAME"], ["------","------------------"], (.[] | [.number, .title]) | @tsv'
+}
+
 case "$1" in
 1) stats_modify_change "$2" ;;
 2) change_count $2 ;;
@@ -360,4 +365,5 @@ case "$1" in
 17) check_new_updates;;
 18) code_version $2 $3;;
 19) pull_plus;;
+20) assigned_issues;;
 esac

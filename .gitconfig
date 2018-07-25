@@ -142,9 +142,6 @@
     # blame  improved
     bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"
 
-    # Open Github Issue
-    issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
-
     # commit  improved
     ucm = reset HEAD~
 
@@ -157,6 +154,12 @@
     # conflict/merges
     ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
     theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
+
+    # Assigned issues
+    assigned = "!f() { ~/projetos/configs/git_utils.sh 20; }; f"
+
+    # Open Github Issue
+    issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
 [diff]
     compactionHeuristic = true
     indentHeuristic = true
