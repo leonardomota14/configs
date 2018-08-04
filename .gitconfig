@@ -41,10 +41,43 @@
     extendedRegexp = true
 [alias]
     # Show all aliases available
-    aliases = "!git config --get-regexp '^alias\\.' | cut -c 7- | sed 's/ / = /'"
+    aliases = "!git config -l | grep alias | cut -c 7-"
 
     # Show who contributed with summarized changes
     contributors = shortlog -sne --no-merges
+
+    # Current branch 
+    b = branch
+
+    # Show health of all branches
+    rbranches = "!f() { ~/projetos/configs/git_utils.sh 22; }; f"
+
+    # Delete local branch 
+    db = branch -d
+
+    # Show changes in files in summarized form
+    st = status -su
+
+    # checkout improved
+    ch = checkout
+
+    # commit  improved
+    cm = commit -m
+
+    # commit  improved
+    ucm = reset HEAD~
+
+    # remove files add for commit
+    unadd = reset HEAD
+
+    # diff improved
+    df = diff --color --ignore-space-at-eol --ignore-blank-lines
+
+    # push improved
+    ps = push
+
+    # pull improved
+    pu = pull --ff-only
 
     # Show all commits of specific file
     follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
@@ -109,44 +142,20 @@
     # log with a text-based graphical representation of the commit history.
     graph = "!f() { ~/projetos/configs/git_utils.sh 8 $1; }; f"
 
-    # Show changes in files in summarized form
-    st = status -su
-
     # Show all tags
     stags = "!f() { ~/projetos/configs/git_utils.sh 7; }; f"
 
     # show improved
     sh = "!f() { ~/projetos/configs/git_utils.sh 6 $1; }; f"
 
-    # diff improved
-    df = diff --color --ignore-space-at-eol --ignore-blank-lines
-
-    # push improved
-    ps = push
-
-    # pull improved
-    pu = pull --ff-only
-
     # pull improved saving stash of files
     puplus = "!f() { ~/projetos/configs/git_utils.sh 19; }; f"
-
-    # checkout improved
-    ch = checkout
 
     # check update
     cu = "!f() { ~/projetos/configs/git_utils.sh 17; }; f"
 
-    # commit  improved
-    cm = commit -m
-
     # blame  improved
-    bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"
-
-    # commit  improved
-    ucm = reset HEAD~
-
-    # remove files add for commit
-    unadd = reset HEAD
+    bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"  
 
     # Copy complete file in specific version
     cv = "!f() { ~/projetos/configs/git_utils.sh 18 $1 $2; }; f"
@@ -156,10 +165,22 @@
     theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
 
     # Assigned issues
-    assigned = "!f() { ~/projetos/configs/git_utils.sh 20; }; f"
+    gh-assigned = "!f() { ~/projetos/configs/git_utils.sh 20; }; f"
+
+    # Branchs remote
+    gh-branches = "!f() { ~/projetos/configs/git_utils.sh 23; }; f"
+
+    # Show Issue
+    gh-issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
+
+    # Repositories of organization
+    gh-repos-org  = "!f() { ~/projetos/configs/git_utils.sh 24; }; f"
+
+    # Repositories of user
+    gh-repos-user  = "!f() { ~/projetos/configs/git_utils.sh 25; }; f"
 
     # Open Github Issue
-    issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
+    tk = "!f() { ~/projetos/configs/git_utils.sh 21; }; f"
 [diff]
     compactionHeuristic = true
     indentHeuristic = true

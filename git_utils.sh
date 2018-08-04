@@ -11,7 +11,7 @@ function stats_modify_change() {
 }
 
 function change_count() {
-	git shortlog -sne --no-merges --since="$1" | sort -fu
+	git shortlog -sne --no-merges --all --since="$1" | sort -fu
 }
 
 function replace_ours_theirs_code() {
@@ -20,17 +20,17 @@ function replace_ours_theirs_code() {
 
 function files_changes() {
 	if [ $# -eq 2 ]; then
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --no-merges --author="$2"
+		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --no-merges --author="$2"
 	else
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --no-merges
+		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --no-merges
 	fi
 }
 
 function history_commit() {
 	if [ $# -eq 2 ]; then
-		git log --format=format:"$defaultPrettyFomat" --no-merges --since="$1" --author="$2"
+		git log --format=format:"$defaultPrettyFomat" --no-merges --remotes --all --since="$1" --author="$2"
 	else
-		git log --format=format:"$defaultPrettyFomat" --no-merges --since="$1"
+		git log --format=format:"$defaultPrettyFomat" --no-merges --remotes --all --since="$1"
 	fi
 }
 
@@ -39,7 +39,7 @@ function show_commit() {
 }
 
 function show_tags() {
-	git log --no-walk --tags --format=format:"$PrettyFomatGraph"
+	git log --no-walk --tags --all --format=format:"$PrettyFomatGraph"
 }
 
 function show_graph() {
@@ -56,12 +56,12 @@ function history_commit_specific_day() {
 	if date -d $(echo "$1" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		if [ ! -z "$2" ]; then
 			if date -d $(echo "$2" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
-				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --no-merges
+				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --all --no-merges
 			else
 				echo 'invalid date (YYYY-MM-DD)'
 			fi
 		else
-			git log --after="$1 00:00:00" --before="$1 23:59" --format=format:"$defaultPrettyFomat" --no-merges
+			git log --after="$1 00:00:00" --before="$1 23:59" --format=format:"$defaultPrettyFomat" --all --no-merges
 		fi
 	else
 		echo 'invalid date (YYYY-MM-DD)'
@@ -137,9 +137,9 @@ function winner() {
 	for player in $PLAYERS; do
 
 	  COMMIT_COUNT=$(git shortlog -sn --all --no-merges --after="$DATE 00:00:00" --author="$player" --pretty=format: --stat | grep '[0-9]*' | awk '{ sum += $1} END { print sum }')
-	  FILES_COUNT=$(git log --shortstat --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print files}')
-	  COMMIT_LINES_INSERTED=$(git log --shortstat --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print inserted}')
-	  COMMIT_LINES_DELETED=$(git log --shortstat --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print deleted}')
+	  FILES_COUNT=$(git log --shortstat --all --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print files}')
+	  COMMIT_LINES_INSERTED=$(git log --shortstat --all --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print inserted}')
+	  COMMIT_LINES_DELETED=$(git log --shortstat --all --no-merges --after="$DATE  00:00:00" --author="$player" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END { print deleted}')
 
 	  if [ -z "$COMMIT_COUNT" ]; then
 	    COMMIT_COUNT=0
@@ -210,7 +210,7 @@ function winner() {
 			echo ""
 			echo "Commit summary"
 			echo ""
-			git shortlog --no-merges --after="$DATE 00:00:00" --pretty=format:"$defaultPrettyFomat" --author="$player"
+			git shortlog --no-merges --all --after="$DATE 00:00:00" --pretty=format:"$defaultPrettyFomat" --author="$player"
 	  fi
 
 	  echo "========================================================"
@@ -233,15 +233,15 @@ function winner() {
 }
 
 function offten_files_today() {
-	git log -M -C --name-only --since="midnight" --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort -n | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}'
+	git log -M -C --name-only --since="midnight" --all --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort -n | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}'
 }
 
 function offten_files_week() {
-	git log -M -C --name-only --since="1 week ago" --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort -n | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}'
+	git log -M -C --name-only --since="1 week ago" --all --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort -n | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}'
 }
 
 function offten_files_month() {
-	git log -M -C --name-only --since="last month" --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort -n | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}'
+	git log -M -C --name-only --since="last month" --all --format='format:' "$@" | sort | grep -v '^$' | uniq -c | sort -n | awk 'BEGIN {print "count\tfile"} {print $1 "\t" $2}'
 }
 
 function summary_line() {
@@ -340,9 +340,30 @@ function pull_plus() {
 	git stash pop
 }
 
-function assigned_issues() {
-	# curl -u "$(git config user.name):$tokenGithub" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq '.[] | {id: .number,title: .title,body: .body, author: .user.login,labels: [.labels[].name]}'
-	curl -u "$(git config user.name):$tokenGithub" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq -r '["ID","NAME"], ["------","------------------"], (.[] | [.number, .title]) | @tsv'
+function github_assigned_issues() {
+	# curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq '.[] | {id: .number,title: .title,body: .body, author: .user.login,labels: [.labels[].name]}'
+	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq -r '["ID","Name"], ["------","------------------"], (.[] | [.number, .title]) | @tsv'
+}
+
+function get_token() {
+	echo ${GIT_TK} | xclip -selection clipboard
+}
+
+function remote_branches() {
+	git branch -r --color=always --sort=creatordate \
+	--format '%(color:yellow)%(creatordate:relative)%(color:reset)|%(color:bold blue)%(authorname)%(color:reset)|%(color:red)%(refname:lstrip=-1)%(color:reset) (%(color:green)%(objectname:short)%(color:reset))'|column -ts'|'
+}
+
+function github_branches() {
+	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/branches" |  jq -c '.[] | {name: .name, url: .commit.url}'
+}
+
+function github_org_repositories() {
+	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/orgs/$(git config --get remote.origin.url | cut -c20-27)/repos" | jq -r '["Name"], ["------------------"], (.[] | [.name]) | @tsv'
+}
+
+function github_user_repositories() {
+	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/user/repos" | jq -r '["Name"], ["------------------"], (.[] | [.name]) | @tsv'
 }
 
 case "$1" in
@@ -365,5 +386,10 @@ case "$1" in
 17) check_new_updates;;
 18) code_version $2 $3;;
 19) pull_plus;;
-20) assigned_issues;;
+20) github_assigned_issues;;
+21) get_token;;
+22) remote_branches;;
+23) github_branches;;
+24) github_org_repositories;;
+25) github_user_repositories;;
 esac
