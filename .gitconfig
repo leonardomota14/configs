@@ -165,6 +165,9 @@
     theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
 
     # Assigned issues
+    gh-issues = "!f() { ~/projetos/configs/git_utils.sh 26; }; f"
+
+    # Assigned issues
     gh-assigned = "!f() { ~/projetos/configs/git_utils.sh 20; }; f"
 
     # Branchs remote
@@ -178,6 +181,9 @@
 
     # Repositories of user
     gh-repos-user  = "!f() { ~/projetos/configs/git_utils.sh 25; }; f"
+
+    # OctoCat quote
+    gh-octo  = "!f() { curl https://api.github.com/octocat; }; f"
 
     # Open Github Issue
     tk = "!f() { ~/projetos/configs/git_utils.sh 21; }; f"

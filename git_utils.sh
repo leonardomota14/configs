@@ -7,11 +7,11 @@ patternDate='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 function stats_modify_change() {
 	readarray -t array_emails < <(change_count $1 | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b' | sort -fu);
 
-	for f in ${array_emails[@]}; do git log --shortstat --author="$f" --since="$1" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed: " files " \t\tlines inserted: ", inserted" \t\tlines deleted: ", deleted" \t\t<'$f'>"}'; done;
+	for f in ${array_emails[@]}; do git log --remotes --all --shortstat --author="$f" --since="$1" | grep -E "fil(e|es) changed" | awk '{files+=$1; inserted+=$4; deleted+=$6} END {print "files changed: " files " \t\tlines inserted: ", inserted" \t\tlines deleted: ", deleted" \t\t<'$f'>"}'; done;
 }
 
 function change_count() {
-	git shortlog -sne --no-merges --all --since="$1" | sort -fu
+	git shortlog -sne --no-merges --all --remotes --since="$1" | sort -fu
 }
 
 function replace_ours_theirs_code() {
@@ -20,9 +20,9 @@ function replace_ours_theirs_code() {
 
 function files_changes() {
 	if [ $# -eq 2 ]; then
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --no-merges --author="$2"
+		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --remotes --no-merges --author="$2"
 	else
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --no-merges
+		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --remotes --no-merges
 	fi
 }
 
@@ -45,9 +45,9 @@ function show_tags() {
 function show_graph() {
 	# Check if limit is defined
 	if [ ! -z "$1" ]; then
-		git log --graph --branches --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -"$1"
+		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -"$1"
 	else
-		git log --graph --branches --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -10
+		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -10
 	fi
 
 }
@@ -56,12 +56,12 @@ function history_commit_specific_day() {
 	if date -d $(echo "$1" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		if [ ! -z "$2" ]; then
 			if date -d $(echo "$2" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
-				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --all --no-merges
+				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --all --remotes --no-merges
 			else
 				echo 'invalid date (YYYY-MM-DD)'
 			fi
 		else
-			git log --after="$1 00:00:00" --before="$1 23:59" --format=format:"$defaultPrettyFomat" --all --no-merges
+			git log --after="$1 00:00:00" --before="$1 23:59" --format=format:"$defaultPrettyFomat" --all --remotes --no-merges
 		fi
 	else
 		echo 'invalid date (YYYY-MM-DD)'
@@ -70,7 +70,7 @@ function history_commit_specific_day() {
 
 function follow_file() {
 	if [ ! -z "$1" ]; then
-		git log --format=format:"$defaultPrettyFomat" --no-merges --follow "$1"
+		git log --remotes --all --format=format:"$defaultPrettyFomat" --no-merges --follow "$1"
 	else
 		echo 'Path is required'
 	fi
@@ -78,7 +78,7 @@ function follow_file() {
 
 function follow_file_displaying() {
 	if [ ! -z "$1" ]; then
-		git log -p --format=format:"$defaultPrettyFomat" --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size "$1"
+		git log --remotes --all -p --format=format:"$defaultPrettyFomat" --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size "$1"
 	else
 		echo 'Path is required'
 	fi
@@ -112,7 +112,7 @@ function winner() {
 		DATE=$(date +%m-%d-%Y) # Today
 	fi
 
-	PLAYERS=$(git shortlog -e --all --after="$DATE 00:00:00" | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b' | sort -fu)
+	PLAYERS=$(git shortlog -e --all --remotes --after="$DATE 00:00:00" | grep -E -o '\b[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+\b' | sort -fu)
 
 	HIGHEST_COMMIT_COUNT=0
 	HIGHEST_FILES_COUNT=0
@@ -366,6 +366,10 @@ function github_user_repositories() {
 	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/user/repos" | jq -r '["Name"], ["------------------"], (.[] | [.name]) | @tsv'
 }
 
+function github_open_issues() {
+	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/orgs/$(git config --get remote.origin.url | cut -c20-27)/issues?filter=all" | jq '.[0] | {name: .title}'
+}
+
 case "$1" in
 1) stats_modify_change "$2" ;;
 2) change_count $2 ;;
@@ -392,4 +396,5 @@ case "$1" in
 23) github_branches;;
 24) github_org_repositories;;
 25) github_user_repositories;;
+26) github_open_issues;;
 esac
