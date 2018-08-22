@@ -1,6 +1,6 @@
 #!/bin/bash
 
-defaultPrettyFomat='%C(green)%h %C(reset)%C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
+defaultPrettyFomat='%C(green)%h %C(reset) %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 PrettyFomatGraph='%C(green)%h %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(reset)%C(bold yellow)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 patternDate='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 

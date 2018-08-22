@@ -58,6 +58,9 @@
     # Show changes in files in summarized form
     st = status -su
 
+    # List all the conflicted files
+    st-fix = diff --name-only --diff-filter=U
+
     # checkout improved
     ch = checkout
 
@@ -73,11 +76,17 @@
     # diff improved
     df = diff --color --ignore-space-at-eol --ignore-blank-lines
 
+    # Show all commits in the current branch yet to be merged to develop
+    df-banch = cherry -v develop
+
     # push improved
     ps = push
-
+    
     # pull improved
     pu = pull --ff-only
+
+    # generate patch file
+    pt = format-patch -M
 
     # Show all commits of specific file
     follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
