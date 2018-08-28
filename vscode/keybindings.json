@@ -1,7 +1,8 @@
 [
   { "key": "ctrl+alt+b", "command": "workbench.action.tasks.runTask", "args": "Run Back" },
   { "key": "ctrl+alt+f", "command": "workbench.action.tasks.runTask", "args": "Run Front" },
-  { "key": "shift+f11", "command": "workbench.action.toggleZenMode" },
+  { "key": "f11", "command": "workbench.action.toggleZenMode" },
+  { "key": "escape escape", "command": "-workbench.action.exitZenMode", "when": "inZenMode" },
   { "key": "ctrl+shift+w", "command": "workbench.action.toggleMaximizedPanel" },
   { "key": "ctrl+t", "command": "workbench.action.terminal.toggleTerminal" },
   { "key": "ctrl+x", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
@@ -18,8 +19,10 @@
   { "key": "ctrl+shift+[", "command": "editor.fold", "when": "editorTextFocus" },
   { "key": "ctrl+shift+]", "command": "editor.unfold", "when": "editorTextFocus" },
   { "key": "ctrl+k ctrl+m", "command": "workbench.action.editor.changeLanguageMode" },
-  { "key": "ctrl+alt+c", "command": "copyFilePath", "when": "editorFocus" },
+  { "key": "ctrl+alt+c", "command": "copyRelativeFilePath", "when": "editorFocus" },
   { "key": "ctrl+shift+w", "command": "-workbench.action.closeWindow" },
   { "key": "ctrl+w", "command": "-workbench.action.closeWindow", "when": "!editorIsOpen && !multipleEditorGroups" },
-  { "key": "ctrl+k ctrl+shift+w", "command": "-workbench.action.closeAllGroups" }
+  { "key": "ctrl+k ctrl+shift+w", "command": "-workbench.action.closeAllGroups" },
+  { "key": "ctrl+numpad0", "command": "-workbench.action.zoomReset" }
+  { "key": "ctrl+0", "command": "workbench.action.zoomReset" },
 ]

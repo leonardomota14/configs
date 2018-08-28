@@ -9,17 +9,18 @@
 	"workbench.statusBar.feedback.visible": false,
 	"workbench.activityBar.visible": false,
 	"explorer.confirmDelete": false,
+	"zenMode.hideStatusBar": false,
 	"editor.fontLigatures": false,
 	"zenMode.centerLayout": false,
 	"editor.dragAndDrop": false,
 	"zenMode.hideTabs": false,
 	"explorer.openEditors.visible": 0,
-	"editor.minimap.maxColumn": 80,
+	"editor.minimap.maxColumn": 50,
 	"editor.wordWrapColumn": 120,
-	"window.zoomLevel": 0,
+	"window.zoomLevel": 1,
 	"editor.fontSize": 14,
 	"editor.tabSize": 2,
-	"editor.fontFamily": "'Source Code Pro'",
+	"editor.fontFamily": "Gintronic Light",
 	"editor.multiCursorModifier": "ctrlCmd",
 	"workbench.colorTheme": "One Dark Pro",
 	"editor.minimap.showSlider": "always",
@@ -41,6 +42,16 @@
 		"**/log/**": true,
 		"**/t/**": true
 	},
+	"search.exclude": {
+		"**/bower_components": true,
+		"**/node_modules": true,
+		"**/public": true,
+		"**/dist": true,
+		"**/tmp": true,
+		"**/doc": true,
+		"**/log": true,
+		"**/DB": true
+	},
 	"files.exclude": {
 		"**/bower_components": true,
 		"**/node_modules": true,
@@ -54,14 +65,6 @@
 		"**/log": true,
 		"**/dist": true
 	},
-	"search.exclude": {
-		"**/bower_components": true,
-		"**/node_modules": true,
-		"**/public": true,
-		"**/dist": true,
-		"**/tmp": true,
-		"**/doc": true,
-		"**/log": true,
-		"**/DB": true
-	},
+	"powermode.enabled": true,
+	"terminal.integrated.rendererType": "dom"
 }

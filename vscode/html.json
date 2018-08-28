@@ -2,7 +2,7 @@
 	"Print to debug": {
 		"prefix": "ppre",
 		"body": [
-			"<pre>{{$1|json}}</pre>",
+			"<pre>{{$1|json}}</pre>"
 		],
 		"description": "Log output to console"
 	}

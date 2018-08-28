@@ -387,6 +387,12 @@
 			"});"
 		]
 	},
+	"Formly Section": {
+		"prefix": "formly-section",
+		"body": [
+			"{ type: 'sectionDivider', templateOptions: { label: '${1:Text}' } },$0"
+		]
+	},
 	"Function Doc": {
 		"prefix": "fn-doc",
 		"description": "Documentação para função",
@@ -409,6 +415,26 @@
 			"/**",
 			"* @todo ${1|Write the documentation.,Implement this function.|}",
 			"*/"
+		]
+	},
+	"Switch Case": {
+		"prefix": "stc",
+		"description": "Switch Case.",
+		"body": [
+			"switch (${1:opcao}) {",
+				"\tcase ${2:'op'}: {",
+					"\t\t${3}",
+					"\t\tbreak;",
+				"\t}",
+				"\tcase ${4:'op'}: {",
+					"\t\t${5}",
+					"\t\tbreak;",
+				"\t}",
+				"\tdefault: {",
+					"\t\t${6}",
+					"\t\tbreak;",
+				"\t}",
+			"}$0",
 		]
 	}
 }
