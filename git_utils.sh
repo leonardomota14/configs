@@ -1,6 +1,5 @@
 #!/bin/bash
 
-defaultPrettyFomat='%C(green)%h %C(reset) %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 PrettyFomatGraph='%C(green)%h %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(reset)%C(bold yellow)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 patternDate='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 
@@ -20,22 +19,22 @@ function replace_ours_theirs_code() {
 
 function files_changes() {
 	if [ $# -eq 2 ]; then
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --remotes --no-merges --author="$2"
+		git log --numstat --since="$1" --all --remotes --no-merges --author="$2"
 	else
-		git log --numstat --pretty=format:"$defaultPrettyFomat" --since="$1" --all --remotes --no-merges
+		git log --numstat --since="$1" --all --remotes --no-merges
 	fi
 }
 
 function history_commit() {
 	if [ $# -eq 2 ]; then
-		git log --format=format:"$defaultPrettyFomat" --no-merges --remotes --all --since="$1" --author="$2"
+		git log --no-merges --remotes --all --since="$1" --author="$2"
 	else
-		git log --format=format:"$defaultPrettyFomat" --no-merges --remotes --all --since="$1"
+		git log --no-merges --remotes --all --since="$1"
 	fi
 }
 
 function show_commit() {
-	git show --numstat --pretty=format:"$defaultPrettyFomat" $1
+	git show --numstat $1
 }
 
 function show_tags() {
@@ -47,7 +46,7 @@ function show_graph() {
 	if [ ! -z "$1" ]; then
 		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -"$1"
 	else
-		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -10
+		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order
 	fi
 
 }
@@ -56,12 +55,12 @@ function history_commit_specific_day() {
 	if date -d $(echo "$1" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
 		if [ ! -z "$2" ]; then
 			if date -d $(echo "$2" | sed -n "/$patternDate/ { s/$patternDate/\3-\2-\1/; p }") > /dev/null 2>&1 ; then
-				git log --after="$1 00:00:00" --before="$2 23:59" --format=format:"$defaultPrettyFomat" --all --remotes --no-merges
+				git log --after="$1 00:00:00" --before="$2 23:59" --all --remotes --no-merges
 			else
 				echo 'invalid date (YYYY-MM-DD)'
 			fi
 		else
-			git log --after="$1 00:00:00" --before="$1 23:59" --format=format:"$defaultPrettyFomat" --all --remotes --no-merges
+			git log --after="$1 00:00:00" --before="$1 23:59" --all --remotes --no-merges
 		fi
 	else
 		echo 'invalid date (YYYY-MM-DD)'
@@ -70,7 +69,7 @@ function history_commit_specific_day() {
 
 function follow_file() {
 	if [ ! -z "$1" ]; then
-		git log --remotes --all --format=format:"$defaultPrettyFomat" --no-merges --follow "$1"
+		git log --remotes --all --no-merges --follow "$1"
 	else
 		echo 'Path is required'
 	fi
@@ -78,7 +77,7 @@ function follow_file() {
 
 function follow_file_displaying() {
 	if [ ! -z "$1" ]; then
-		git log --remotes --all -p --format=format:"$defaultPrettyFomat" --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size "$1"
+		git log --remotes --all -p --no-merges --follow --ignore-space-at-eol --ignore-blank-lines --remove-empty --ignore-all-space --ignore-space-change --log-size "$1"
 	else
 		echo 'Path is required'
 	fi
@@ -210,7 +209,7 @@ function winner() {
 			echo ""
 			echo "Commit summary"
 			echo ""
-			git shortlog --no-merges --all --after="$DATE 00:00:00" --pretty=format:"$defaultPrettyFomat" --author="$player"
+			git shortlog --no-merges --all --after="$DATE 00:00:00" --author="$player"
 	  fi
 
 	  echo "========================================================"
@@ -341,7 +340,6 @@ function pull_plus() {
 }
 
 function github_assigned_issues() {
-	# curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq '.[] | {id: .number,title: .title,body: .body, author: .user.login,labels: [.labels[].name]}'
 	curl -u "$(git config user.name):${GIT_TK}" -sL "https://api.github.com/repos/$(git config --get remote.origin.url | cut -c20-1000)/issues?assignee=$(git config user.name)" |  jq -r '["ID","Name"], ["------","------------------"], (.[] | [.number, .title]) | @tsv'
 }
 

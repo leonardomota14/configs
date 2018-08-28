@@ -39,6 +39,8 @@
     untracked = cyan
 [grep]
     extendedRegexp = true
+[format]
+    pretty = "%C(green)%h %C(reset) %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))"
 [alias]
     # Show all aliases available
     aliases = "!git config -l | grep alias | cut -c 7-"
@@ -77,7 +79,7 @@
     df = diff --color --ignore-space-at-eol --ignore-blank-lines
 
     # Show all commits in the current branch yet to be merged to develop
-    df-banch = cherry -v develop
+    df-branch = cherry -v develop
 
     # push improved
     ps = push
