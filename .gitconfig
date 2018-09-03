@@ -40,7 +40,7 @@
 [grep]
     extendedRegexp = true
 [format]
-    pretty = "%C(green)%h %C(reset) %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(red)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))"
+    pretty = "%C(green)%h %C(bold yellow)-%C(bold red)%d %C(magenta)•%C(reset) %s %C(magenta)• %C(bold blue)%cN%C(reset), %C(yellow)%ar"
 [alias]
     # Show all aliases available
     aliases = "!git config -l | grep alias | cut -c 7-"
@@ -58,7 +58,7 @@
     db = branch -d
 
     # Show changes in files in summarized form
-    st = status -su
+    st = status -sbu
 
     # List all the conflicted files
     st-fix = diff --name-only --diff-filter=U
