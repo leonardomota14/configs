@@ -1,6 +1,4 @@
 #!/bin/bash
-
-PrettyFomatGraph='%C(green)%h %C(bold yellow)-%C(reset)%C(bold red)%d%C(reset) %C(reset)%C(bold yellow)•%C(reset) %s (%C(bold blue)%cN %C(reset), %C(yellow) %ar%C(reset))'
 patternDate='\([0-9]\{3\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)'
 
 function stats_modify_change() {
@@ -38,15 +36,15 @@ function show_commit() {
 }
 
 function show_tags() {
-	git log --no-walk --tags --all --format=format:"$PrettyFomatGraph"
+	git log --no-walk --tags --all
 }
 
 function show_graph() {
 	# Check if limit is defined
 	if [ ! -z "$1" ]; then
-		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order -"$1"
+		git log --graph --branches --all --remotes --tags  --date-order -"$1"
 	else
-		git log --graph --branches --all --remotes --tags  --format=format:"$PrettyFomatGraph" --date-order
+		git log --graph --branches --all --remotes --tags  --date-order
 	fi
 
 }
