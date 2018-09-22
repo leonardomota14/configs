@@ -13,6 +13,7 @@
   { "key": "ctrl+k ctrl+u", "command": "editor.action.transformToUppercase", "when": "editorTextFocus && !editorReadonly" },
   { "key": "ctrl+k ctrl+l", "command": "editor.action.transformToLowercase", "when": "editorTextFocus && !editorReadonly" },
   { "key": "ctrl+d", "command": "editor.action.copyLinesDownAction", "when": "editorFocus && !editorReadonly && !editorHasSelection" },
+  { "key": "ctrl+l", "command": "expandLineSelection", "when": "editorFocus" },
   { "key": "ctrl+m", "command": "editor.action.jumpToBracket", "when": "editorFocus" },
   { "key": "ctrl+shift+/", "command": "editor.action.blockComment", "when": "editorFocus && !editorReadonly" },
   { "key": "ctrl+shift+[", "command": "editor.fold", "when": "editorTextFocus" },
@@ -23,5 +24,7 @@
   { "key": "ctrl+w", "command": "-workbench.action.closeWindow", "when": "!editorIsOpen && !multipleEditorGroups" },
   { "key": "ctrl+k ctrl+shift+w", "command": "-workbench.action.closeAllGroups" },
   { "key": "ctrl+numpad0", "command": "-workbench.action.zoomReset" },
-  { "key": "ctrl+0", "command": "-workbench.action.focusSideBar" }
+  { "key": "ctrl+0", "command": "-workbench.action.focusSideBar" },
+  { "key": "escape escape", "command": "-workbench.action.exitZenMode", "when": "inZenMode" },
+  { "key": "ctrl+shift+c", "command": "-workbench.action.terminal.openNativeConsole", "when": "!terminalFocus" }
 ]
