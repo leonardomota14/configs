@@ -67,7 +67,7 @@
     ch = checkout
 
     # commit  improved
-    cm = commit -m
+    cm = commit 
 
     # commit  improved
     ucm = reset HEAD~
@@ -198,6 +198,12 @@
 
     # Open Github Issue
     tk = "!f() { ~/projetos/configs/git_utils.sh 21; }; f"
+
+    # creates local branch pr/4 from the github upstream(if it exists) or origin remote and checks it out
+    pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+    
+    # removes all pr/* branches from your local repo
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 [diff]
     compactionHeuristic = true
     indentHeuristic = true
