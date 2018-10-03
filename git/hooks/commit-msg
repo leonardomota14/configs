@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const childProcessExec = require('child_process').exec;
+const util = require('util');
+const BEST_MESSAGE = /^(refactor|fix|feat|doc|chore|build|test)(\(.*\)\:)(.{3,})$/i;
+const TIMEOUT_THRESHOLD = 3000;
+
+const exec = util.promisify(childProcessExec);
+
+checkCommitMessage();
+hookCleanup();
+
+async function checkCommitMessage(){
+
+  const message = fs.readFileSync(process.argv[2], 'utf8').trim().split('\n')[0];
+  let branchName = '';
+  try{
+    branchName = await getCurrentBranch();
+  }
+  catch (e){
+    handleGitBranchCommandError(e);
+  }
+
+  if(message.length > 50 || !BEST_MESSAGE.test(message)){
+    handleBadCommitMessage();
+  }
+  process.exit(0);
+}
+
+async function getCurrentBranch() {
+
+  const branchesOutput = await exec('git branch');
+  if( branchesOutput.stderr){
+    throw new Error(stderr);
+  }
+  const branches = branchesOutput.stdout;
+  return branches.split('\n').find(b => b.trim().charAt(0) === '*' ).trim().substring(2);
+}
+
+function handleGitBranchCommandError(e){
+  console.log('something bad happened when trying to read the repository branches using the "git branch" command');
+  console.log('this is script is intended to be run as a git hook inside a git repository. Are you sure you\'re calling it properly?');
+  console.log('the error provided by the "git branch" invocation was the following:');
+  console.log(e.getMessage() );
+  console.log('----');
+  console.log('Your commit will be rejected. This script will terminate.');
+  process.exit(1);
+}
+
+function handleBadCommitMessage(){
+  console.log('There is something wrong with your commit message');
+  console.log('your commit will be rejected. Please re-commit your work again with a proper commit message.');
+  process.exit(1);
+}
+
+function hookCleanup(){
+
+  setTimeout(() => {
+    console.log('This is a timeout message from your commit-msg git hook. If you see this, something bad happened in your pre-commit hook, and it absolutely did not work as expected.');
+    console.log(' Your commit will be rejected. Please read any previous error message related to your commit message, and/or check the commit-msg git hook script.');
+    console.log(' You can find more info in this link: https://git-scm.com/book/uz/v2/Customizing-Git-An-Example-Git-Enforced-Policy');
+    process.exit(1);
+  },TIMEOUT_THRESHOLD);
+
+}
