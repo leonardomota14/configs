@@ -52,7 +52,7 @@
     b = branch
 
     # Show health of all branches
-    rbranches = "!f() { ~/projetos/configs/git_utils.sh 22; }; f"
+    rbranches = "!f() { ~/projetos/configs/git/git_utils.sh 22; }; f"
 
     # Delete local branch 
     db = branch -d
@@ -91,113 +91,113 @@
     pt = format-patch -M
 
     # Show all commits of specific file
-    follow = "!f() { ~/projetos/configs/git_utils.sh 10 $1; }; f"
+    follow = "!f() { ~/projetos/configs/git/git_utils.sh 10 $1; }; f"
 
     # Show al commits of specific file displaying the changes
-    follow-show = "!f() { ~/projetos/configs/git_utils.sh 16 $1; }; f"
+    follow-show = "!f() { ~/projetos/configs/git/git_utils.sh 16 $1; }; f"
 
     # Show all commits today
-    today = "!f() { ~/projetos/configs/git_utils.sh 5 'midnight' $1; }; f"
+    today = "!f() { ~/projetos/configs/git/git_utils.sh 5 'midnight' $1; }; f"
 
     # Show all commits week
-    week = "!f() { ~/projetos/configs/git_utils.sh 5 '1 week ago' $1; }; f"
+    week = "!f() { ~/projetos/configs/git/git_utils.sh 5 '1 week ago' $1; }; f"
 
     # Show all commits month
-    month = "!f() { ~/projetos/configs/git_utils.sh 5 'last month' $1; }; f"
+    month = "!f() { ~/projetos/configs/git/git_utils.sh 5 'last month' $1; }; f"
 
     # Show all commits today count
-    today-count = "!f() { ~/projetos/configs/git_utils.sh 2 'midnight'; }; f"
+    today-count = "!f() { ~/projetos/configs/git/git_utils.sh 2 'midnight'; }; f"
 
     # Show all commits week count
-    week-count = "!f() { ~/projetos/configs/git_utils.sh 2 '1 week ago'; }; f"
+    week-count = "!f() { ~/projetos/configs/git/git_utils.sh 2 '1 week ago'; }; f"
 
     # Show all commits week count
-    month-count = "!f() { ~/projetos/configs/git_utils.sh 2 'last month'; }; f"
+    month-count = "!f() { ~/projetos/configs/git/git_utils.sh 2 'last month'; }; f"
 
     # Show all stats of the day
-    today-change = "!f() { ~/projetos/configs/git_utils.sh 1 'midnight'; }; f"
+    today-change = "!f() { ~/projetos/configs/git/git_utils.sh 1 'midnight'; }; f"
 
     # Show all stats of the week
-    week-change = "!f() { ~/projetos/configs/git_utils.sh 1 '1 week ago'; }; f"
+    week-change = "!f() { ~/projetos/configs/git/git_utils.sh 1 '1 week ago'; }; f"
 
     # Show all stats of the month
-    month-change = "!f() { ~/projetos/configs/git_utils.sh 1 'last month'; }; f"
+    month-change = "!f() { ~/projetos/configs/git/git_utils.sh 1 'last month'; }; f"
 
     # Show all files changed today
-    today-files = "!f() { ~/projetos/configs/git_utils.sh 4 'midnight' $1; }; f"
+    today-files = "!f() { ~/projetos/configs/git/git_utils.sh 4 'midnight' $1; }; f"
 
     # Show all files changed week
-    week-files = "!f() { ~/projetos/configs/git_utils.sh 4 '1 week ago' $1; }; f"
+    week-files = "!f() { ~/projetos/configs/git/git_utils.sh 4 '1 week ago' $1; }; f"
 
     # Show all files changed month
-    month-files = "!f() { ~/projetos/configs/git_utils.sh 4 'last month' $1; }; f"
+    month-files = "!f() { ~/projetos/configs/git/git_utils.sh 4 'last month' $1; }; f"
 
     # Show all commits specific day
-    day = "!f() { ~/projetos/configs/git_utils.sh 9 $1 $2; }; f"
+    day = "!f() { ~/projetos/configs/git/git_utils.sh 9 $1 $2; }; f"
 
     # Show status  of commits,files and lines
-    winner = "!f() { ~/projetos/configs/git_utils.sh 11 $1 $2; }; f"
+    winner = "!f() { ~/projetos/configs/git/git_utils.sh 11 $1 $2; }; f"
 
     # Show files most edited today
-    offten-files-today = "!f() { ~/projetos/configs/git_utils.sh 12; }; f"
+    offten-files-today = "!f() { ~/projetos/configs/git/git_utils.sh 12; }; f"
 
     # Show files most edited week
-    offten-files-week = "!f() { ~/projetos/configs/git_utils.sh 13; }; f"
+    offten-files-week = "!f() { ~/projetos/configs/git/git_utils.sh 13; }; f"
 
     # Show files most edited month
-    offten-files-month = "!f() { ~/projetos/configs/git_utils.sh 14; }; f"
+    offten-files-month = "!f() { ~/projetos/configs/git/git_utils.sh 14; }; f"
 
     # Show summary of project
-    summary-line = "!f() { ~/projetos/configs/git_utils.sh 15; }; f"
+    summary-line = "!f() { ~/projetos/configs/git/git_utils.sh 15; }; f"
 
     # log with a text-based graphical representation of the commit history.
-    graph = "!f() { ~/projetos/configs/git_utils.sh 8 $1; }; f"
+    graph = "!f() { ~/projetos/configs/git/git_utils.sh 8 $1; }; f"
 
     # Show all tags
-    stags = "!f() { ~/projetos/configs/git_utils.sh 7; }; f"
+    stags = "!f() { ~/projetos/configs/git/git_utils.sh 7; }; f"
 
     # show improved
-    sh = "!f() { ~/projetos/configs/git_utils.sh 6 $1; }; f"
+    sh = "!f() { ~/projetos/configs/git/git_utils.sh 6 $1; }; f"
 
     # pull improved saving stash of files
-    puplus = "!f() { ~/projetos/configs/git_utils.sh 19; }; f"
+    puplus = "!f() { ~/projetos/configs/git/git_utils.sh 19; }; f"
 
     # check update
-    cu = "!f() { ~/projetos/configs/git_utils.sh 17; }; f"
+    cu = "!f() { ~/projetos/configs/git/git_utils.sh 17; }; f"
 
     # blame  improved
     bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"  
 
     # Copy complete file in specific version
-    cv = "!f() { ~/projetos/configs/git_utils.sh 18 $1 $2; }; f"
+    cv = "!f() { ~/projetos/configs/git/git_utils.sh 18 $1 $2; }; f"
 
     # conflict/merges
-    ours = "!f() { ~/projetos/configs/git_utils.sh 3 'ours'; }; f"
-    theirs = "!f() { ~/projetos/configs/git_utils.sh 3 'theirs'; }; f"
+    ours = "!f() { ~/projetos/configs/git/git_utils.sh 3 'ours'; }; f"
+    theirs = "!f() { ~/projetos/configs/git/git_utils.sh 3 'theirs'; }; f"
 
     # Assigned issues
-    gh-issues = "!f() { ~/projetos/configs/git_utils.sh 26; }; f"
+    gh-issues = "!f() { ~/projetos/configs/git/git_utils.sh 26; }; f"
 
     # Assigned issues
-    gh-assigned = "!f() { ~/projetos/configs/git_utils.sh 20; }; f"
+    gh-assigned = "!f() { ~/projetos/configs/git/git_utils.sh 20; }; f"
 
     # Branchs remote
-    gh-branches = "!f() { ~/projetos/configs/git_utils.sh 23; }; f"
+    gh-branches = "!f() { ~/projetos/configs/git/git_utils.sh 23; }; f"
 
     # Show Issue
     gh-issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
 
     # Repositories of organization
-    gh-repos-org  = "!f() { ~/projetos/configs/git_utils.sh 24; }; f"
+    gh-repos-org  = "!f() { ~/projetos/configs/git/git_utils.sh 24; }; f"
 
     # Repositories of user
-    gh-repos-user  = "!f() { ~/projetos/configs/git_utils.sh 25; }; f"
+    gh-repos-user  = "!f() { ~/projetos/configs/git/git_utils.sh 25; }; f"
 
     # OctoCat quote
     gh-octo  = "!f() { curl https://api.github.com/octocat; }; f"
 
     # Open Github Issue
-    tk = "!f() { ~/projetos/configs/git_utils.sh 21; }; f"
+    tk = "!f() { ~/projetos/configs/git/git_utils.sh 21; }; f"
 
     # creates local branch pr/4 from the github upstream(if it exists) or origin remote and checks it out
     pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
