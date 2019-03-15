@@ -1,14 +1,16 @@
 {
-	"extensions.ignoreRecommendations": true,
-	"editor.find.autoFindInSelection": true,
-	"breadcrumbs.enabled": true,
-	"search.smartCase": true,
 	"workbench.statusBar.feedback.visible": false,
+	"extensions.ignoreRecommendations": true,
+	"editor.find.autoFindInSelection": false,
+	"gitlens.blame.ignoreWhitespace": true,
 	"workbench.activityBar.visible": false,
+	"gitlens.currentLine.enabled": false,
+	"zenMode.hideLineNumbers": false,
 	"zenMode.hideStatusBar": false,
 	"zenMode.centerLayout": false,
 	"editor.dragAndDrop": false,
 	"zenMode.hideTabs": false,
+	"search.smartCase": true,
 	"explorer.openEditors.visible": 0,
 	"editor.minimap.maxColumn": 50,
 	"editor.wordWrapColumn": 120,
@@ -17,12 +19,11 @@
 	"workbench.colorTheme": "Monokai Pro (Filter Machine)",
 	"terminal.integrated.rendererType": "dom",
 	"editor.multiCursorModifier": "ctrlCmd",
-	"editor.fontFamily": "Gintronic Light",
+	"editor.fontFamily": "Source Code Pro",
 	"editor.minimap.showSlider": "always",
 	"editor.renderWhitespace": "boundary",
 	"window.menuBarVisibility": "hidden",
 	"debug.toolBarLocation": "docked",
-	"update.channel": "none",
 	"files.watcherExclude": {
 		"**/.git/subtree-cache/**": true,
 		"**/bower_components/**": true,
@@ -60,5 +61,5 @@
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/log": true
-	}
+	},
 }
