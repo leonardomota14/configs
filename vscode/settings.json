@@ -1,8 +1,6 @@
 {
 	"workbench.statusBar.feedback.visible": false,
-	"extensions.ignoreRecommendations": true,
 	"editor.find.autoFindInSelection": false,
-	"gitlens.blame.ignoreWhitespace": true,
 	"workbench.activityBar.visible": false,
 	"gitlens.currentLine.enabled": false,
 	"zenMode.hideLineNumbers": false,
@@ -10,13 +8,16 @@
 	"zenMode.centerLayout": false,
 	"editor.dragAndDrop": false,
 	"zenMode.hideTabs": false,
+	"extensions.ignoreRecommendations": true,
+	"gitlens.blame.ignoreWhitespace": true,
+	"breadcrumbs.enabled": true,
 	"search.smartCase": true,
 	"explorer.openEditors.visible": 0,
 	"editor.minimap.maxColumn": 50,
 	"editor.wordWrapColumn": 120,
-	"window.zoomLevel": 1,
+	"window.zoomLevel": 0,
 	"editor.tabSize": 2,
-	"workbench.colorTheme": "Monokai Pro (Filter Machine)",
+	"workbench.colorTheme": "Shades of Purple",
 	"terminal.integrated.rendererType": "dom",
 	"editor.multiCursorModifier": "ctrlCmd",
 	"editor.fontFamily": "Source Code Pro",
@@ -61,5 +62,5 @@
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/log": true
-	},
+	}
 }
