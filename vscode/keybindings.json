@@ -6,7 +6,7 @@
   { "key": "ctrl+t", "command": "workbench.action.terminal.toggleTerminal" },
   { "key": "ctrl+x", "command": "workbench.action.terminal.kill", "when": "terminalFocus" },
   { "key": "ctrl+p", "command": "workbench.action.terminal.focusPrevious", "when": "terminalFocus" },
-  { "key": "ctrl+n", "command": "workbench.action.terminal.new", "when": "terminalFocus" },
+  { "key": "ctrl+shift+t", "command": "workbench.action.terminal.new", "when": "terminalFocus" },
   { "key": "ctrl+f", "command": "workbench.action.terminal.focusFindWidget", "when": "terminalFocus" },
   { "key": "ctrl+`", "command": "workbench.action.terminal.focus", "when": "!terminalFocus" },
   { "key": "ctrl+`", "command": "workbench.action.focusActiveEditorGroup", "when": "terminalFocus" },
@@ -26,5 +26,6 @@
   { "key": "ctrl+numpad0", "command": "-workbench.action.zoomReset" },
   { "key": "ctrl+0", "command": "-workbench.action.focusSideBar" },
   { "key": "escape escape", "command": "-workbench.action.exitZenMode", "when": "inZenMode" },
-  { "key": "ctrl+shift+c", "command": "-workbench.action.terminal.openNativeConsole", "when": "!terminalFocus" }
+  { "key": "ctrl+shift+c", "command": "-workbench.action.terminal.openNativeConsole", "when": "!terminalFocus" },
+  { "key": "ctrl+shift+g", "command": "workbench.view.scm", "when": "gitlens:enabled && config.gitlens.keymap == 'chorded'" },
 ]
