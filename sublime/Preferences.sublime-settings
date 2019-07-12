@@ -10,7 +10,7 @@
 	"caret_extra_width": 1,
 	"caret_style": "smooth",
 	"close_windows_when_empty": true,
-	"color_scheme": "Packages/Color Scheme - Default/Mariana.sublime-color-scheme",
+	"color_scheme": "Packages/Theme - Monokai Pro/Monokai Pro (Filter Machine).sublime-color-scheme",
 	"detect_indentation": true,
 	"draw_centered": false,
 	"draw_minimap_border": true,
@@ -34,7 +34,12 @@
 		".tmp",
 		".git",
 		".vscode",
-		".sass-cache"
+		".sass-cache",
+		"public",
+		"cypress",
+		"external",
+		"paralel",
+		"cache"
 	],
 	"font_face": "Source Code Pro",
 	"font_options":
@@ -42,7 +47,7 @@
 		"gray_antialias",
 		"subpixel_antialias"
 	],
-	"font_size": 13,
+	"font_size": 12,
 	"glue_userpath": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
@@ -70,7 +75,7 @@
 	"show_line_endings": true,
 	"show_markers_on_untracked_file": true,
 	"tab_size": 2,
-	"theme": "Default.sublime-theme",
+	"theme": "Monokai Pro (Filter Machine).sublime-theme",
 	"tree_animation_enabled": false,
 	"trim_trailing_white_space_on_save": true,
 	"use_simple_full_screen": true,
