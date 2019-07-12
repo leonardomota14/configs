@@ -48,13 +48,13 @@
     # Show who contributed with summarized changes
     contributors = shortlog -sne --no-merges
 
-    # Current branch 
-    b = branch
+    # Current branch
+    b = branch -vv
 
     # Show health of all branches
     rbranches = "!f() { ~/projetos/configs/git/git_utils.sh 22; }; f"
 
-    # Delete local branch 
+    # Delete local branch
     db = branch -d
 
     # Show changes in files in summarized form
@@ -67,7 +67,7 @@
     ch = checkout
 
     # commit  improved
-    cm = commit 
+    cm = commit
 
     # commit  improved
     ucm = reset HEAD~
@@ -83,7 +83,7 @@
 
     # push improved
     ps = push
-    
+
     # pull improved
     pu = pull --ff-only
 
@@ -166,7 +166,7 @@
     cu = "!f() { ~/projetos/configs/git/git_utils.sh 17; }; f"
 
     # blame  improved
-    bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"  
+    bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"
 
     # Copy complete file in specific version
     cv = "!f() { ~/projetos/configs/git/git_utils.sh 18 $1 $2; }; f"
@@ -187,23 +187,20 @@
     # Show Issue
     gh-issue = "!f() { firefox $(git config --get remote.origin.url)/issues/$1; }; f"
 
-    # Repositories of organization
-    gh-repos-org  = "!f() { ~/projetos/configs/git/git_utils.sh 24; }; f"
-
-    # Repositories of user
-    gh-repos-user  = "!f() { ~/projetos/configs/git/git_utils.sh 25; }; f"
-
     # OctoCat quote
-    gh-octo  = "!f() { curl https://api.github.com/octocat; }; f"
+    octo  = "!f() { curl https://api.github.com/octocat; }; f"
 
     # Open Github Issue
     tk = "!f() { ~/projetos/configs/git/git_utils.sh 21; }; f"
 
     # creates local branch pr/4 from the github upstream(if it exists) or origin remote and checks it out
     pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
-    
+
     # removes all pr/* branches from your local repo
-    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+	pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+
+    # While pull command
+    pw = "!f() { while sleep 300; do git pu; done }; f"
 [diff]
     compactionHeuristic = true
     indentHeuristic = true
