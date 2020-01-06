@@ -27,5 +27,8 @@
   { "key": "ctrl+0", "command": "-workbench.action.focusSideBar" },
   { "key": "escape escape", "command": "-workbench.action.exitZenMode", "when": "inZenMode" },
   { "key": "ctrl+shift+c", "command": "-workbench.action.terminal.openNativeConsole", "when": "!terminalFocus" },
-  { "key": "ctrl+shift+g", "command": "workbench.view.scm", "when": "gitlens:enabled && config.gitlens.keymap == 'chorded'" }
+  { "key": "ctrl+shift+g", "command": "workbench.view.scm" },
+  { "key": "ctrl+numpad0", "command": "workbench.view.explorer" },
+  { "key": "ctrl+shift+e", "command": "-workbench.view.explorer" },
+  { "key": "ctrl+0", "command": "workbench.view.explorer" }
 ]

@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Front",
+      "name": "Debug Front",
       "type": "chrome",
       "request": "launch",
       "trace": true,
