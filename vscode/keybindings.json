@@ -30,5 +30,7 @@
   { "key": "ctrl+shift+g", "command": "workbench.view.scm" },
   { "key": "ctrl+numpad0", "command": "workbench.view.explorer" },
   { "key": "ctrl+shift+e", "command": "-workbench.view.explorer" },
-  { "key": "ctrl+0", "command": "workbench.view.explorer" }
+  { "key": "ctrl+0", "command": "workbench.view.explorer" },
+  { "key": "ctrl+shift+f", "command": "search.action.openNewEditor" },
+  { "key": "ctrl+shift+f", "command": "-workbench.action.findInFiles" }
 ]
