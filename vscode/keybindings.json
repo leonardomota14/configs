@@ -32,5 +32,6 @@
   { "key": "ctrl+shift+e", "command": "-workbench.view.explorer" },
   { "key": "ctrl+0", "command": "workbench.view.explorer" },
   { "key": "ctrl+shift+f", "command": "search.action.openNewEditor" },
-  { "key": "ctrl+shift+f", "command": "-workbench.action.findInFiles" }
+  { "key": "ctrl+shift+f", "command": "-workbench.action.findInFiles" },
+  { "key": "alt+b", "command": "gitlens.toggleFileBlame", "when": "editorFocus && !editorReadonly" }
 ]
