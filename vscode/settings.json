@@ -12,6 +12,7 @@
 	"telemetry.enableTelemetry": false,
 	"gitlens.codeLens.enabled": false,
 	"zenMode.hideLineNumbers": false,
+	"explorer.compactFolders": false,
 	"editor.minimap.enabled": false,
 	"zenMode.hideStatusBar": false,
 	"zenMode.centerLayout": false,
