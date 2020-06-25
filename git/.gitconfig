@@ -66,14 +66,17 @@
     # checkout improved
     ch = checkout
 
-    # commit  improved
+    # Commit  improved
     cm = commit
 
-    # commit  improved
+    # Undoes the last commit
     ucm = reset HEAD~
 
     # remove files add for commit
     unadd = reset HEAD
+    
+    # Recover deleted file/folder
+    urm = checkout --
 
     # diff improved
     df = diff --color --ignore-space-at-eol --ignore-blank-lines
@@ -81,13 +84,13 @@
     # Show all commits in the current branch yet to be merged to develop
     df-branch = cherry -v develop
 
-    # push improved
+    # Push improved
     ps = push
 
-    # pull improved
+    # Pull improved
     pu = pull --ff-only
 
-    # generate patch file
+    # Generate patch file
     pt = format-patch -M
 
     # Show all commits of specific file
@@ -150,7 +153,7 @@
     # Show summary of project
     summary-line = "!f() { ~/projetos/configs/git/git_utils.sh 15; }; f"
 
-    # log with a text-based graphical representation of the commit history.
+    # Log with a text-based graphical representation of the commit history.
     graph = "!f() { ~/projetos/configs/git/git_utils.sh 8 $1; }; f"
 
     # Show all tags
@@ -159,13 +162,13 @@
     # show improved
     sh = "!f() { ~/projetos/configs/git/git_utils.sh 6 $1; }; f"
 
-    # pull improved saving stash of files
+    # Pull improved saving stash of files
     puplus = "!f() { ~/projetos/configs/git/git_utils.sh 19; }; f"
 
-    # check update
+    # Check update
     cu = "!f() { ~/projetos/configs/git/git_utils.sh 17; }; f"
 
-    # blame  improved
+    # Blame  improved
     bl = "!f() { firefox $(git config --get remote.origin.url)/blame/$(git rev-parse HEAD)/$1; }; f"
 
     # Copy complete file in specific version
@@ -197,7 +200,7 @@
     pr  = "!f() { git fetch -fu ${2:-$(git remote |grep ^upstream || echo origin)} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 
     # removes all pr/* branches from your local repo
-	pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
 
     # While pull command
     pw = "!f() { while sleep 300; do git pu; done }; f"
