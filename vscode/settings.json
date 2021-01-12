@@ -1,6 +1,7 @@
 {
 	"gitlens.codeLens.recentChange.enabled": false,
 	"gitlens.advanced.telemetry.enabled": false,
+	"bookmarks.navigateThroughAllFiles": false,
 	"gitlens.codeLens.authors.enabled": false,
 	"gitlens.currentLine.scrollable": false,
 	"gitlens.mode.statusBar.enabled": false,
