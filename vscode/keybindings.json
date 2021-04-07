@@ -24,7 +24,7 @@
   { "key": "ctrl+shift+d", "command": "editor.action.duplicateSelection", "when": "editorFocus && !editorReadonly && editorHasSelection" },
   { "key": "ctrl+shift+e", "command": "-workbench.view.explorer" },
   { "key": "ctrl+shift+f", "command": "-workbench.action.findInFiles" },
-  { "key": "ctrl+shift+f", "command": "search.action.openNewEditor" },
+  { "key": "ctrl+shift+f", "command": "search.action.openEditor" },
   { "key": "ctrl+shift+g", "command": "workbench.view.scm" },
   { "key": "ctrl+shift+t", "command": "workbench.action.terminal.new", "when": "terminalFocus" },
   { "key": "ctrl+shift+w", "command": "-workbench.action.closeWindow" },
@@ -32,5 +32,5 @@
   { "key": "escape escape", "command": "-workbench.action.exitZenMode", "when": "inZenMode" },
   { "key": "ctrl+shift+/", "command": "editor.action.blockComment", "when": "editorFocus && !editorReadonly" },
   { "key": "ctrl+shift+[", "command": "editor.fold", "when": "editorTextFocus" },
-  { "key": "ctrl+shift+]", "command": "editor.unfold", "when": "editorTextFocus" },
+  { "key": "ctrl+shift+]", "command": "editor.unfold", "when": "editorTextFocus" }
 ]
